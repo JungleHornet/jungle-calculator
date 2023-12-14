@@ -7,7 +7,7 @@ print("Welcome to JungleHornet's 2D distance calculator")
 def main():
     print("Please input point 1 (x,y)")
     inpt1 = input()
-    coord1 = re.split("[(]\s*(\d+)\s*[,]\s*(\d+)\s*[)]", inpt1)
+    coord1 = re.split("(\d+)\s*[,]\s*(\d+)", inpt1)
     x1 = coord1[1]
     y1 = coord1[2]
 
@@ -16,7 +16,7 @@ def main():
 
     print("Please input point 2 (x,y)")
     inpt2 = input()
-    coord2 = re.split("[(]\s*(\d+)\s*[,]\s*(\d+)\s*[)]", inpt2)
+    coord2 = re.split("(\d+)\s*[,]\s*(\d+)", inpt2)
     x2 = coord2[1]
     y2 = coord2[2]
 
@@ -46,16 +46,15 @@ def main():
     sqrtDist = '√' + str(round(exp))
     root = round(exp)
 
-    for i in range(2, rounded**2 + 1):
+    for i in range(2, rounded + 1):
+        if rootCoefficient * math.sqrt(simpleRootInt) == dist:
+            break
         if (root / i).is_integer():
             if not i == root and not (root / i) == root:
                 if (math.sqrt(root / i)).is_integer():
                     simpleRootInt = i
                     rootCoefficient = rootCoefficient * int(math.sqrt(root / i))
-        for x in range(2, simpleRootInt**2 + 1):
-            if (root / i).is_integer():
-                i = 2
-                break
+                    print(str(rootCoefficient) + '√' + str(simpleRootInt) + "\n")
 
     simpleRoot = str(rootCoefficient) + '√' + str(simpleRootInt)
 
@@ -66,15 +65,16 @@ def main():
 
     print(response)
 
-while True:
+while True: 
     main()
     print("\n Restart? (y/n)")
     yn = input().lower()
-    if yn == y:
+    if yn == "y":
         print("Restarting Program")
-    elif yn == n:
+    elif yn == "n":
         print("N recieved, ending program.")
-        sys.exit
+        break
     else:
         print("Y or N not recieved, ending program.")
-        sys.exit
+        break
+sys.exit()
