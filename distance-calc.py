@@ -72,9 +72,9 @@ while True:
     if yn == "y":
         print("Restarting Program")
     elif yn == "n":
-        print("N recieved, ending program.")
+        print("n recieved, ending program.")
         break
     else:
-        print("Y or N not recieved, ending program.")
+        print("y or n not recieved, ending program.")
         break
 sys.exit()
