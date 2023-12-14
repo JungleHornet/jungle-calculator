@@ -47,18 +47,18 @@ def main():
     root = round(exp)
 
     for i in range(2, rounded + 1):
-        if rootCoefficient * math.sqrt(simpleRootInt) == dist:
-            break
         if (root / i).is_integer():
             if not i == root and not (root / i) == root:
                 if (math.sqrt(root / i)).is_integer():
                     simpleRootInt = i
                     rootCoefficient = rootCoefficient * int(math.sqrt(root / i))
                     print(str(rootCoefficient) + '√' + str(simpleRootInt) + "\n")
+        if rootCoefficient * math.sqrt(simpleRootInt) == dist:
+            break
 
     simpleRoot = str(rootCoefficient) + '√' + str(simpleRootInt)
 
-    if math.sqrt(root).is_integer():
+    if math.sqrt(root).is_integer() or simpleRootInt == 0:
         response = "The distance is " + str(dist) + " or " + str(sqrtDist)
     else:
         response = "The distance is " + str(dist) + ", " + str(sqrtDist) + ", or " + str(simpleRoot)
