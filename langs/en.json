@@ -11,5 +11,6 @@
   "y": "y",
   "n": "n",
   "str10": " received, ending program.",
-  "str11": " not received, ending program."
+  "str11": " not received, ending program.",
+    "str12": "Restarting program"
 }

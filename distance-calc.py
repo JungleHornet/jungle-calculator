@@ -21,6 +21,8 @@ with open("langs/" + dictionaryFile) as json_file:
 print(d["str1"])
 
 
+
+
 def main():
     # Get input
     print(d["str2"])
@@ -105,11 +107,11 @@ while True:
     print("\n" + d["str9"])
     yn = input().lower()
     if yn == d["y"]:
-        print(d["str11"])
+        print(d["y"] + d["str10"])
     elif yn == d["n"]:
-        print(d["n"] + d["str10"])
+        print(d["n"] + d["str11"])
         break
     else:
-        print(d["y"] + d["str6"] + d["n"] + d["str11"])
+        print(d["y"] + d["str6"] + d["n"] + d["str12"])
         break
 sys.exit()
