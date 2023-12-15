@@ -27,7 +27,7 @@ def main():
     inpt1 = input()
 
     # Match input to regex
-    coord1 = re.split("(-?\\d+.?\\d*)\\s*,\\s*(-?\\d+.?\\d*)", inpt1)
+    coord1 = re.split("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)", inpt1)
 
     # Check if input is in correct format
     if not (len(coord1) == 4):
@@ -43,7 +43,7 @@ def main():
     inpt2 = input()
 
     # Match input to regex
-    coord2 = re.split("(-?\\d+.?\\d*)\\s*,\\s*(-?\\d+.?\\d*)", inpt2)
+    coord2 = re.split("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)", inpt2)
 
     # Check if input is in correct format
     if not (len(coord2) == 4):
