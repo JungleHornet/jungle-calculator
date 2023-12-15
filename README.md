@@ -1,6 +1,6 @@
-Welcome to JungleHornet's 2D distance calculator!
+Welcome to JungleHornet's 2D be distance calculator!
 
-It currently can only calculate distance between 2 2D points, but I may add 3d or other functions in the future.
+It currently can only calculate distance between 2 2D points, but I may add 3D or other functions in the future.
 
 To use, follow the console intructions.
 Note: In the console, it tells you to put inputs in format (x,y), but it will work without parantheses and will ignore whitespace, except between digits.
