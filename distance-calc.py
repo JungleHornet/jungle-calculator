@@ -1,13 +1,29 @@
 import re
 import math
 import sys
+import json
 
-print("Welcome to JungleHornet's 2D distance calculator")
+print("Please select a language (english (en), magyar (ma) )")
+langInpt = input().lower()
+if langInpt == "english" or langInpt == "en":
+    print("English selected.")
+    dictionaryFile = "en.json"
+elif langInpt == "magyar" or langInpt == "ma":
+    print("Magyar válogatott.")
+    dictionaryFile = "hu.json"
+else:
+    print("Language not recognised, defaulting to english.")
+    dictionaryFile = "en.json"
+
+with open("langs/" + dictionaryFile) as json_file:
+    d = json.load(json_file)
+
+print(d["str1"])
 
 
 def main():
     # Get input
-    print("Please input point 1 (x,y)")
+    print(d["str2"])
     inpt1 = input()
 
     # Match input to regex
@@ -15,7 +31,7 @@ def main():
 
     # Check if input is in correct format
     if not (len(coord1) == 4):
-        print("Error: Input not in correct format")
+        print(d["str4"])
         return
 
     # Get x and y values from input
@@ -23,7 +39,7 @@ def main():
     y1 = int(coord1[2])
 
     # Get second input
-    print("Please input point 2 (x,y)")
+    print(d["str3"])
     inpt2 = input()
 
     # Match input to regex
@@ -31,7 +47,7 @@ def main():
 
     # Check if input is in correct format
     if not (len(coord2) == 4):
-        print("Error: Input not in correct format")
+        print(d["str4"])
         return
 
     # Get x and y values from input
@@ -76,23 +92,25 @@ def main():
 
     # Create response
     if math.sqrt(root).is_integer() or simpleRootInt == 0:
-        response = "The distance is " + str(dist) + " or " + str(sqrtDist)
+        response = d["str5"] + str(dist) + d["str6"] + str(sqrtDist)
     else:
-        response = "The distance is " + str(dist) + ", " + str(sqrtDist) + ", or " + str(simpleRoot)
+        response = d["str5"] + str(dist) + d["str7"] + str(sqrtDist) + d["str8"] + str(simpleRoot)
 
     print(response)
 
     # Check if user wants to restart
+
+
 while True:
     main()
-    print("\n Restart? (y/n)")
+    print("\n" + d["str9"])
     yn = input().lower()
-    if yn == "y":
-        print("Restarting Program")
-    elif yn == "n":
-        print("n recieved, ending program.")
+    if yn == d["y"]:
+        print(d["str12"])
+    elif yn == d["n"]:
+        print(d["n"] + d["str10"])
         break
     else:
-        print("y or n not recieved, ending program.")
+        print(d["y"] + d["str6"] + d["n"] + d["str11"])
         break
 sys.exit()

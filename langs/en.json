@@ -1,0 +1,15 @@
+{
+  "str1": "Welcome to JungleHornet's 2D distance calculator",
+  "str2": "Please input point 1 (x,y)",
+  "str3": "Please input point 2 (x,y)",
+  "str4": "Error: Input not in correct format",
+  "str5": "The distance is ",
+  "str6": " or ",
+  "str7": ", ",
+  "str8": ", or",
+  "str9": "Restart? (y/n)",
+  "y": "y",
+  "n": "n",
+  "str10": " received, ending program.",
+  "str11": " not received, ending program."
+}

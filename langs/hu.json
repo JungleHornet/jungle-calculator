@@ -1,0 +1,16 @@
+{
+  "str1": "\u00DCdv\u00F6z\u00F6lj\u00FCk a JungleHornet 2D t\u00E1vols\u00E1gkalkul\u00E1tor\u00E1ban",
+  "str2": "K\u00E9rj\u00FCk, adja meg az 1. pontot (x,y)",
+  "str3": "K\u00E9rj\u00FCk, adja meg a 2. pontot (x,y)",
+  "str4": "Hiba: A bemenet nem megfelel\u0151 form\u00E1tumban",
+  "str5": "A t\u00E1vols\u00E1g az ",
+  "str6": " vagy ",
+  "str7": ", ",
+  "str8": ", vagy ",
+  "str9": "\u00DAjrakezd? (i/n)",
+  "y": "i",
+  "n": "n",
+  "str10": " fogadott, befejez\u0151 program.",
+  "str11": " nem \u00E9rkezett meg, a program v\u00E9get \u00E9r.",
+  "str12": "Program \u00FAjraind\u00EDt\u00E1sa"
+}
