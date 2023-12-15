@@ -27,7 +27,7 @@ def main():
     inpt1 = input()
 
     # Match input to regex
-    coord1 = re.split("(-?\\d+)\\s*,\\s*(-?\\d+)", inpt1)
+    coord1 = re.split("(-?\\d+.?\\d*)\\s*,\\s*(-?\\d+.?\\d*)", inpt1)
 
     # Check if input is in correct format
     if not (len(coord1) == 4):
@@ -35,15 +35,15 @@ def main():
         return
 
     # Get x and y values from input
-    x1 = int(coord1[1])
-    y1 = int(coord1[2])
+    x1 = float(coord1[1])
+    y1 = float(coord1[2])
 
     # Get second input
     print(d["str3"])
     inpt2 = input()
 
     # Match input to regex
-    coord2 = re.split("(-?\\d+)\\s*,\\s*(-?\\d+)", inpt2)
+    coord2 = re.split("(-?\\d+.?\\d*)\\s*,\\s*(-?\\d+.?\\d*)", inpt2)
 
     # Check if input is in correct format
     if not (len(coord2) == 4):
@@ -51,8 +51,8 @@ def main():
         return
 
     # Get x and y values from input
-    x2 = int(coord2[1])
-    y2 = int(coord2[2])
+    x2 = float(coord2[1])
+    y2 = float(coord2[2])
 
     # Calculate distance
     a = x2 - x1
