@@ -83,7 +83,6 @@ def main():
                 if (math.sqrt(root / i)).is_integer():
                     simpleRootInt = i
                     rootCoefficient = rootCoefficient * int(math.sqrt(root / i))
-                    print(str(rootCoefficient) + '√' + str(simpleRootInt) + "\n")
         if rootCoefficient * math.sqrt(simpleRootInt) == dist:
             break
 
