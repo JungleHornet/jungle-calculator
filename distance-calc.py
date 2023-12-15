@@ -107,7 +107,7 @@ while True:
     print("\n" + d["str9"])
     yn = input().lower()
     if yn == d["y"]:
-        print(d["y"] + d["str10"])
+        print(d["str12"])
     elif yn == d["n"]:
         print(d["n"] + d["str11"])
         break
