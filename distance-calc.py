@@ -1,51 +1,66 @@
 import re
 import math
-import sys    
+import sys
 
 print("Welcome to JungleHornet's 2D distance calculator")
 
+
 def main():
+    # Get input
     print("Please input point 1 (x,y)")
     inpt1 = input()
-    coord1 = re.split("(\d+)\s*[,]\s*(\d+)", inpt1)
-    x1 = coord1[1]
-    y1 = coord1[2]
 
-    x1 = int(x1)
-    y1 = int(y1)
+    # Match input to regex
+    coord1 = re.split("(\\d+)\\s*,\\s*(\\d+)", inpt1)
 
+    # Check if input is in correct format
+    if not (len(coord1) == 4):
+        print("Error: Input not in correct format")
+        return
+
+    # Get x and y values from input
+    x1 = int(coord1[1])
+    y1 = int(coord1[2])
+
+    # Get second input
     print("Please input point 2 (x,y)")
     inpt2 = input()
-    coord2 = re.split("(\d+)\s*[,]\s*(\d+)", inpt2)
-    x2 = coord2[1]
-    y2 = coord2[2]
 
-    x2 = int(x2)
-    y2 = int(y2)
+    # Match input to regex
+    coord2 = re.split("(\\d+)\\s*,\\s*(\\d+)", inpt2)
 
+    # Check if input is in correct format
+    if not (len(coord2) == 4):
+        print("Error: Input not in correct format")
+        return
+
+    # Get x and y values from input
+    x2 = int(coord2[1])
+    y2 = int(coord2[2])
+
+    # Calculate distance
     a = x2 - x1
     b = y2 - y1
 
-    a = a**2
-    b = b**2
-
+    a = a ** 2
+    b = b ** 2
 
     dist = math.sqrt(a + b)
 
+    # Round distance
     rounded = round(dist)
     if rounded < dist:
         rounded = rounded + 1
 
-    root = 0
-    simpleRoot = 0
+    # Create unsimplified square root
     rootCoefficient = 1
-    sqrtDist = 0
     simpleRootInt = 0
-    exp = dist**2
+    exp = dist ** 2
 
     sqrtDist = '√' + str(round(exp))
     root = round(exp)
 
+    # Simplify square root
     for i in range(2, rounded + 1):
         if (root / i).is_integer():
             if not i == root and not (root / i) == root:
@@ -56,8 +71,10 @@ def main():
         if rootCoefficient * math.sqrt(simpleRootInt) == dist:
             break
 
+    # Create simplified square root string
     simpleRoot = str(rootCoefficient) + '√' + str(simpleRootInt)
 
+    # Create response
     if math.sqrt(root).is_integer() or simpleRootInt == 0:
         response = "The distance is " + str(dist) + " or " + str(sqrtDist)
     else:
@@ -65,7 +82,8 @@ def main():
 
     print(response)
 
-while True: 
+    # Check if user wants to restart
+while True:
     main()
     print("\n Restart? (y/n)")
     yn = input().lower()
