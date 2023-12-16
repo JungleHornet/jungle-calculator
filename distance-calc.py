@@ -2,25 +2,24 @@ import re
 import math
 import sys
 import json
+from os import path
 
 print("Please select a language (english (en), magyar (ma) )")
 langInpt = input().lower()
 if langInpt == "english" or langInpt == "en":
     print("English selected.")
+    fileName = path.abspath(path.join(path.dirname(__file__), 'en.json'))
     dictionaryFile = "en.json"
 elif langInpt == "magyar" or langInpt == "ma":
     print("Magyar válogatott.")
-    dictionaryFile = "hu.json"
+    fileName = path.abspath(path.join(path.dirname(__file__), 'hu.json'))
 else:
     print("Language not recognised, defaulting to english.")
-    dictionaryFile = "en.json"
+    fileName = path.abspath(path.join(path.dirname(__file__), 'en.json'))
 
-with open("langs/" + dictionaryFile) as json_file:
-    d = json.load(json_file)
+d = json.load(open(fileName))
 
 print(d["str1"])
-
-
 
 
 def main():
