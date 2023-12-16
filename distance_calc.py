@@ -44,31 +44,26 @@ def distance_calc(d):
 
     dist = math.sqrt(a + b)
 
-    # Round distance
-    rounded = math.ceil(dist)
-
-    # Create unsimplified square root
-    rootCoefficient = 1
-    simpleRootInt = 0
-
     sqrtDist = '√' + str(round(dist ** 2))
     root = round(dist ** 2)
 
+    # Create unsimplified square root
+    rootCoefficient = 1
+    simpleRootInt = root
+
     # Simplify square root
-    for i in range(2, rounded + 1):
-        if (root / i).is_integer():
-            if not i == root and not (root / i) == root:
-                if (math.sqrt(root / i)).is_integer():
+    for i in range(2, round(math.sqrt(root))):
+        if (simpleRootInt / i).is_integer():
+            if not i == simpleRootInt and not (simpleRootInt / i) == simpleRootInt:
+                if (math.sqrt(simpleRootInt / i)).is_integer():
                     simpleRootInt = i
                     rootCoefficient = rootCoefficient * int(math.sqrt(root / i))
-        if rootCoefficient * math.sqrt(simpleRootInt) == dist:
-            break
 
     # Create simplified square root string
     simpleRoot = str(rootCoefficient) + '√' + str(simpleRootInt)
 
     # Create response
-    if math.sqrt(root).is_integer() or simpleRootInt == 0:
+    if math.sqrt(root).is_integer() or simpleRootInt == root:
         response = d["str5"] + str(dist) + d["str6"] + str(sqrtDist)
     else:
         response = d["str5"] + str(dist) + d["str7"] + str(sqrtDist) + d["str8"] + str(simpleRoot)
