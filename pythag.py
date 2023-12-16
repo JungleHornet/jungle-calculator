@@ -75,11 +75,10 @@ def pythag(d):
         yn = input().lower()
         if yn == d["y"]:
             print(d["str12"])
+            return True
         elif yn == d["n"]:
             print(d["n"] + d["str10"])
-            break
+            return False
         else:
             print(d["y"] + d["str6"] + d["n"] + d["str11"])
-            break
-        pythag(d)
-    return
+            return False

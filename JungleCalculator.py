@@ -31,6 +31,11 @@ d = getDict()
 print(d["str1"])
 
 
+def run(func):
+    while func(d):
+        pass
+
+
 def main():
     while True:
         print(d["str13"])
@@ -41,13 +46,13 @@ def main():
         inpt = input().lower()
         if inpt == "1":
             print("\n\n")
-            distance_calc.distance_calc(d)
+            run(distance_calc.distance_calc)
         elif inpt == "2":
             print("\n\n")
-            pythag.pythag(d)
+            run(pythag.pythag)
         elif inpt == "3":
             print("\n\n")
-            radical_simplifier.simplify_radical(d)
+            run(radical_simplifier.simplify_radical)
         elif inpt == "q":
             print(d["quit"] + d["str10"])
             sys.exit()
