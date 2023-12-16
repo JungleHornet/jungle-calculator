@@ -23,5 +23,7 @@
   "str14": "Error: Not valid operation, please enter a valid operation",
   "str15": "Please input leg 1 length",
   "str16": "Please input leg 2 length",
-  "str17": "The hypotenuse length is "
+  "str17": "The hypotenuse length is ",
+  "str18": "Please input the radicand (number inside the radical)",
+  "str19": "The simplified radical is "
 }
