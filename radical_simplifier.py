@@ -7,23 +7,22 @@ def simplify_radical(d):
         root = int(input())
     except ValueError:
         print(d["str4"])
-        simplify_radical(d)
+        return True
     rootCoefficient = 1
-    simpleRootInt = 0
+    simpleRootInt = root
+
     # Simplify square root
-    for i in range(2, root):
-        if (root / i).is_integer():
-            if not i == root and not (root / i) == root:
-                if (math.sqrt(root / i)).is_integer():
+    for i in range(2, round(math.sqrt(root))):
+        if (simpleRootInt / i).is_integer():
+            if not i == simpleRootInt and not (simpleRootInt / i) == simpleRootInt:
+                if (math.sqrt(simpleRootInt / i)).is_integer():
                     simpleRootInt = i
                     rootCoefficient = rootCoefficient * int(math.sqrt(root / i))
-        if rootCoefficient * math.sqrt(simpleRootInt) == root:
-            break
 
     # Create simplified square root string
     if rootCoefficient == 1:
         simpleRoot = '√' + str(root)
-    elif simpleRootInt == 0:
+    elif simpleRootInt == root:
         simpleRoot = '√' + str(root)
     else:
         simpleRoot = str(rootCoefficient) + '√' + str(simpleRootInt)

@@ -43,26 +43,21 @@ def pythag(d):
     root = round(hyp ** 2)
     sqrtHyp = '√' + str(root)
 
-    # Round hypotenuse
-    rounded = math.ceil(hyp)
-
     # Simplify radical
     rootCoefficient = 1
-    simpleRootInt = 0
-    for i in range(2, rounded + 1):
-        if (root / i).is_integer():
-            if not i == root and not (root / i) == root:
-                if (math.sqrt(root / i)).is_integer():
+    simpleRootInt = root
+    for i in range(2, round(math.sqrt(root))):
+        if (simpleRootInt / i).is_integer():
+            if not i == simpleRootInt and not (simpleRootInt / i) == simpleRootInt:
+                if (math.sqrt(simpleRootInt / i)).is_integer():
                     simpleRootInt = i
                     rootCoefficient = rootCoefficient * int(math.sqrt(root / i))
-        if rootCoefficient * math.sqrt(simpleRootInt) == hyp:
-            break
 
     # Create simplified square root string
     simpleRoot = str(rootCoefficient) + '√' + str(simpleRootInt)
 
     # Create response
-    if math.sqrt(root).is_integer() or simpleRootInt == 0:
+    if math.sqrt(root).is_integer() or simpleRootInt == root:
         response = d["str17"] + str(hyp) + d["str6"] + str(sqrtHyp)
     else:
         response = d["str17"] + str(hyp) + d["str7"] + str(sqrtHyp) + d["str8"] + str(simpleRoot)
