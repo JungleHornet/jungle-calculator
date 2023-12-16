@@ -8,5 +8,3 @@ Radical Simplifier
 
 
 To use, follow the console intructions.
-
-Thank you to https://regex101.com for helping me make the RegEx for this.
