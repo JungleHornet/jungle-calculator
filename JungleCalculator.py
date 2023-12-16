@@ -15,6 +15,8 @@ else:
     print("Language not recognised, defaulting to english.")
     dictFile = 'en.json'
 
+dictFile = 'langs/' + dictFile
+
 
 def getDict():
     fileName = path.abspath(path.join(path.dirname(__file__), dictFile))
