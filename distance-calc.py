@@ -8,15 +8,15 @@ print("Please select a language (english (en), magyar (ma) )")
 langInpt = input().lower()
 if langInpt == "english" or langInpt == "en":
     print("English selected.")
-    fileName = path.abspath(path.join(path.dirname(__file__), 'en.json'))
-    dictionaryFile = "en.json"
+    dictFile = 'en.json'
 elif langInpt == "magyar" or langInpt == "ma":
     print("Magyar válogatott.")
-    fileName = path.abspath(path.join(path.dirname(__file__), 'hu.json'))
+    dictFile = 'hu.json'
 else:
     print("Language not recognised, defaulting to english.")
-    fileName = path.abspath(path.join(path.dirname(__file__), 'en.json'))
+    dictFile = 'en.json'
 
+fileName = path.abspath(path.join(path.dirname(__file__), dictFile))
 d = json.load(open(fileName))
 
 print(d["str1"])
