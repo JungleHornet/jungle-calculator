@@ -1,5 +1,13 @@
 {
-  "str1": "Welcome to JungleHornet's 2D distance calculator",
+  "func1": "2D Distance Formula (1)",
+  "func2": "Pythagorean Theorem (2)",
+  "func3": "Radical Simplifier (3)",
+  "quit": "Quit (q)",
+
+  "y": "y",
+  "n": "n",
+
+  "str1": "Welcome to JungleCalculator!",
   "str2": "Please input point 1 (x,y)",
   "str3": "Please input point 2 (x,y)",
   "str4": "Error: Input not in correct format",
@@ -8,9 +16,12 @@
   "str7": ", ",
   "str8": ", or ",
   "str9": "Restart? (y/n)",
-  "y": "y",
-  "n": "n",
   "str10": " received, ending program.",
   "str11": " not received, ending program.",
-    "str12": "Restarting program"
+  "str12": "Restarting program",
+  "str13": "What function would you like to use?",
+  "str14": "Error: Not valid operation, please enter a valid operation",
+  "str15": "Please input leg 1 length",
+  "str16": "Please input leg 2 length",
+  "str17": "The hypotenuse length is "
 }
