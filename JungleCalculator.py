@@ -39,7 +39,7 @@ def distance_calc():
     # Check if input is in correct format
     if not (len(coord1) == 4):
         print(d["str4"])
-        pythag()
+        distance_calc()
 
     # Get x and y values from input
     x1 = float(coord1[1])
@@ -55,7 +55,7 @@ def distance_calc():
     # Check if input is in correct format
     if not (len(coord2) == 4):
         print(d["str4"])
-        pythag()
+        distance_calc()
 
     # Get x and y values from input
     x2 = float(coord2[1])
@@ -108,10 +108,10 @@ def distance_calc():
         if yn == d["y"]:
             print(d["str12"])
         elif yn == d["n"]:
-            print(d["n"] + d["str11"])
+            print(d["n"] + d["str10"])
             break
         else:
-            print(d["y"] + d["str6"] + d["n"] + d["str12"])
+            print(d["y"] + d["str6"] + d["n"] + d["str11"])
             break
         distance_calc()
     main()
@@ -191,10 +191,10 @@ def pythag():
         if yn == d["y"]:
             print(d["str12"])
         elif yn == d["n"]:
-            print(d["n"] + d["str11"])
+            print(d["n"] + d["str10"])
             break
         else:
-            print(d["y"] + d["str6"] + d["n"] + d["str12"])
+            print(d["y"] + d["str6"] + d["n"] + d["str11"])
             break
         pythag()
     main()
