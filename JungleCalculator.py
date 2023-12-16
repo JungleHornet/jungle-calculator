@@ -1,6 +1,7 @@
 import json
 import math
 import re
+import sys
 from os import path
 
 print("Please select a language (english (en), magyar (ma) )")
@@ -216,6 +217,7 @@ def main():
         print("\n\n")
     elif inpt == "q":
         print(d["quit"] + d["str10"])
+        sys.exit()
     else:
         print(d["str14"])
         main()
