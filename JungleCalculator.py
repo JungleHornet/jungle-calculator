@@ -58,7 +58,6 @@ def main():
             sys.exit()
         else:
             print(d["str14"])
-            main()
 
 
 main()
