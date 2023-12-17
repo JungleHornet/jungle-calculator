@@ -1,14 +1,27 @@
 package main
 
 import (
+	"embed"
+	_ "embed"
+)
+
+import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"strings"
 )
+
+//go:embed langs
+var f embed.FS
+var en, hu []byte
+
+func init() {
+	en, _ = f.ReadFile("langs/en.json")
+	hu, _ = f.ReadFile("langs/hu.json")
+}
 
 var d map[string]string
 
@@ -44,40 +57,22 @@ func main() {
 	s := NewScanner()
 
 	langInpt := strings.ToLower(s.ReadLine())
-	var dictFile string
+	var dictFile []byte
 	switch langInpt {
 	case "en":
 		fmt.Println("English selected.")
-		dictFile = "en.json"
+		dictFile = en
 
 	case "ma":
 		fmt.Println("Magyar válogatott.")
-		dictFile = "ma.json"
+		dictFile = hu
 
 	default:
 		fmt.Println("Language not recognised, defaulting to english.")
-		dictFile = "en.json"
+		dictFile = en
 	}
 
-	dictFile = "langs/" + dictFile
-
-	jsonFile, err := os.Open(dictFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer func(jsonFile *os.File) {
-		err := jsonFile.Close()
-		if err != nil {
-			fmt.Println(err)
-		}
-	}(jsonFile)
-
-	all, err := io.ReadAll(jsonFile)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	err = json.Unmarshal(all, &d)
+	err := json.Unmarshal(dictFile, &d)
 	if err != nil {
 		fmt.Println(err)
 	}
