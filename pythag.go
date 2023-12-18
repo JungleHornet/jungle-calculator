@@ -7,57 +7,41 @@ import (
 	"strconv"
 )
 
-func distanceCalc() bool {
-	fmt.Println(d["str2"])
+func pythag() bool {
 	s := NewScanner()
+	fmt.Println(d["str15"])
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)")
-	inpt1 := re.FindStringSubmatch(inpt)
-	if !(len(inpt1) == 3) {
+
+	re := regexp.MustCompile("\\d*.?\\d*")
+	inpt1 := re.FindString(inpt)
+	if inpt1 == "" {
 		fmt.Println(d["str4"])
 		return true
 	}
 
-	x1, err := strconv.ParseFloat(inpt1[1], 64)
-	if err != nil {
-		fmt.Println(err)
-		return true
-	}
-	y1, err := strconv.ParseFloat(inpt1[2], 64)
+	leg1, err := strconv.ParseFloat(inpt1, 64)
 	if err != nil {
 		fmt.Println(err)
 		return true
 	}
 
-	fmt.Println(d["str3"])
+	fmt.Println(d["str16"])
 	inpt = s.ReadLine()
-	inpt2 := re.FindStringSubmatch(inpt)
-	if !(len(inpt2) == 3) {
+	inpt2 := re.FindString(inpt)
+	if inpt2 == "" {
 		fmt.Println(d["str4"])
 		return true
 	}
 
-	x2, err := strconv.ParseFloat(inpt2[1], 64)
-	if err != nil {
-		fmt.Println(err)
-		return true
-	}
-	y2, err := strconv.ParseFloat(inpt2[2], 64)
-	if err != nil {
-		fmt.Println(err)
-		return true
-	}
+	leg2, err := strconv.ParseFloat(inpt2, 64)
 
-	a := x2 - x1
-	b := y2 - y1
+	leg1 = leg1 * leg1
+	leg2 = leg2 * leg2
 
-	a = a * a
-	b = b * b
+	hyp := math.Sqrt(leg1 + leg2)
 
-	dist := math.Sqrt(a + b)
-
-	sqrtDist := "√" + strconv.FormatFloat(math.Round(dist*dist), 'f', -1, 64)
-	root := math.Round(dist * dist)
+	root := math.Round(hyp * hyp)
+	sqrtHyp := "√" + strconv.FormatFloat(root, 'f', -1, 64)
 
 	rootCoefficient := int64(1)
 	simpleRootInt := root
@@ -78,9 +62,9 @@ func distanceCalc() bool {
 
 	var response string
 	if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
-		response = d["str5"] + strconv.FormatFloat(dist, 'f', -1, 64) + d["str6"] + sqrtDist
+		response = d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64) + d["str6"] + sqrtHyp
 	} else {
-		response = d["str5"] + strconv.FormatFloat(dist, 'f', -1, 64) + d["str7"] + sqrtDist +
+		response = d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64) + d["str7"] + sqrtHyp +
 			d["str8"] + simpleRoot
 	}
 
