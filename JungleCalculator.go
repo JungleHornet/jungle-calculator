@@ -90,7 +90,7 @@ func main_loop() {
 		switch inpt {
 		case "1":
 			fmt.Println("\n\n")
-			run(distance_calc)
+			run(distanceCalc)
 		case "2":
 			fmt.Println("\n\n")
 
