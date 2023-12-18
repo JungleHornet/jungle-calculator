@@ -96,11 +96,10 @@ func main_loop() {
 			run(pythag)
 		case "3":
 			fmt.Println("\n\n")
-
+			run(simplifyRadical)
 		case "q":
 			fmt.Println(d["quit"] + d["str10"])
 			os.Exit(0)
-
 		default:
 			fmt.Println(d["str14"])
 
