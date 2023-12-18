@@ -93,7 +93,7 @@ func main_loop() {
 			run(distanceCalc)
 		case "2":
 			fmt.Println("\n\n")
-
+			run(pythag)
 		case "3":
 			fmt.Println("\n\n")
 
