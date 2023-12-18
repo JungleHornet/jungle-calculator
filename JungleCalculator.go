@@ -1,12 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"embed"
 	_ "embed"
-)
-
-import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -27,7 +24,6 @@ var d map[string]string
 
 func run(myFunc func() bool) {
 	for myFunc() {
-
 	}
 }
 
@@ -94,7 +90,7 @@ func main_loop() {
 		switch inpt {
 		case "1":
 			fmt.Println("\n\n")
-
+			run(distance_calc)
 		case "2":
 			fmt.Println("\n\n")
 
