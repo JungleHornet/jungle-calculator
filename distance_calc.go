@@ -87,5 +87,22 @@ func distanceCalc() bool {
 
 	fmt.Println(response)
 
-	return true
+	for {
+		fmt.Println("\n" + d["str9"])
+		yn := s.ReadLine()
+
+		switch yn {
+		case "y":
+			fmt.Println(d["str12"])
+			return true
+
+		case "n":
+			fmt.Println(d["n"] + d["str10"])
+			return false
+
+		default:
+			fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
+			return false
+		}
+	}
 }
