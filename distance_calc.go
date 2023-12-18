@@ -57,10 +57,10 @@ func distanceCalc() bool {
 	dist := math.Sqrt(a + b)
 
 	// This is commented so Golang will work because I haven't used sqrtDist yet
-	// sqrtDist := "√" + strconv.FormatFloat(math.Round(dist*dist), 'f', -1, 64)
+	sqrtDist := "√" + strconv.FormatFloat(math.Round(dist*dist), 'f', -1, 64)
 	root := math.Round(dist * dist)
 
-	rootCoefficient := 1
+	rootCoefficient := int64(1)
 	simpleRootInt := root
 
 	for i := float64(2); i <= math.Round(math.Sqrt(root)); i++ {
@@ -68,11 +68,24 @@ func distanceCalc() bool {
 			if !(i == simpleRootInt) && !(i == 1) {
 				if math.Sqrt(simpleRootInt/i) == math.Trunc(math.Sqrt(simpleRootInt/i)) {
 					simpleRootInt = i
-					rootCoefficient = rootCoefficient * int(math.Sqrt(root/i))
+					rootCoefficient = rootCoefficient * int64(math.Sqrt(root/i))
 				}
 			}
 		}
 	}
+
+	simpleRoot := strconv.FormatInt(rootCoefficient, 10) + "√"
+	simpleRoot = simpleRoot + strconv.FormatFloat(simpleRootInt, 'f', -1, 64)
+
+	var response string
+	if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
+		response = d["str5"] + strconv.FormatFloat(dist, 'f', -1, 64) + d["str6"] + sqrtDist
+	} else {
+		response = d["str5"] + strconv.FormatFloat(dist, 'f', -1, 64) + d["str7"] + sqrtDist +
+			d["str8"] + simpleRoot
+	}
+
+	fmt.Println(response)
 
 	return true
 }
