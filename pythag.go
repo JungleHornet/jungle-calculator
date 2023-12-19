@@ -63,7 +63,7 @@ func pythag() bool {
 
 	simpRootParts := strings.Split(simpleSqrtHyp, "√")
 
-	simpleRootInt, err := strconv.ParseFloat(simpRootParts[2], 64)
+	simpleRootInt, err := strconv.ParseFloat(simpRootParts[1], 64)
 	if err != nil {
 		fmt.Println(err)
 	}
