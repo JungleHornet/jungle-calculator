@@ -1,7 +1,8 @@
 {
   "func1": "2D t\u00E1vols\u00E1gi k\u00E9plet (1)",
-  "func2": "Pitagorasz-t\u00E9tel (2)",
-  "func3": "Radik\u00E1lis egyszer\u0171sít\u0151 (3)",
+  "func2": "3D t\u00E1vols\u00E1gi k\u00E9plet (2)",
+  "func3": "Pitagorasz-t\u00E9tel (3)",
+  "func4": "Radik\u00E1lis egyszer\u0171sít\u0151 (4)",
   "quit": "Kil\u00E9p\u00E9s (q)",
 
   "y": "i",
@@ -26,5 +27,6 @@
   "str17": "A hipotenusz hossza az ",
   "str18": "K\u00E9rj\u00FCk, adja meg a radik\u00E1dot (a sz\u00E1m a gy\u00F6k\u00F6n bel\u00FCl)",
   "str19": "Az egyszer\u0171s\u00EDtett radik\u00E1lis az ",
-  "str20": "Unable to cut prefix of "
+  "str20": "Unable to cut prefix of ",
+  "str21": "K\u00E9rj\u00FCk, adja meg a 3. pontot (x,y)"
 }

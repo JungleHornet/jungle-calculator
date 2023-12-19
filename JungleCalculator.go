@@ -93,8 +93,11 @@ func main_loop() {
 			run(distanceCalc)
 		case "2":
 			fmt.Println("\n\n")
-			run(pythag)
+			run(distanceCalc3D)
 		case "3":
+			fmt.Println("\n\n")
+			run(pythag)
+		case "4":
 			fmt.Println("\n\n")
 			run(simplifyRadical)
 		case "q":

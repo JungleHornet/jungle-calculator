@@ -1,7 +1,8 @@
 {
   "func1": "2D Distance Formula (1)",
-  "func2": "Pythagorean Theorem (2)",
-  "func3": "Radical Simplifier (3)",
+  "func2": "3D Distance Formula (2)",
+  "func3": "Pythagorean Theorem (3)",
+  "func4": "Radical Simplifier (4)",
   "quit": "Quit (q)",
 
   "y": "y",
@@ -26,5 +27,6 @@
   "str17": "The hypotenuse length is ",
   "str18": "Please input the radicand (number inside the radical)",
   "str19": "The simplified radical is ",
-  "str20": "Unable to cut prefix of "
+  "str20": "Unable to cut prefix of ",
+  "str21": "Please input point 3 (x,y)"
 }
