@@ -45,7 +45,7 @@ func pythag() bool {
 		fmt.Println(err)
 	}
 
-	sqrtHyp := junglemath.Pythag(leg1, leg2, junglemath.Radical)
+	sqrtHyp := junglemath.Pythag(leg1, leg2, "rad")
 
 	rootStr, success := strings.CutPrefix(sqrtHyp, "√")
 
