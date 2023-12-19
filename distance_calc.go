@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/junglehornet/junglemath"
+	"log"
 	"math"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func distanceCalc() bool {
@@ -48,33 +51,26 @@ func distanceCalc() bool {
 		return true
 	}
 
-	a := x2 - x1
-	b := y2 - y1
-
-	a = a * a
-	b = b * b
-
-	dist := math.Sqrt(a + b)
-
-	sqrtDist := "√" + strconv.FormatFloat(math.Round(dist*dist), 'f', -1, 64)
-	root := math.Round(dist * dist)
-
-	rootCoefficient := int64(1)
-	simpleRootInt := root
-
-	for i := float64(2); i <= math.Round(math.Sqrt(root)); i++ {
-		if (simpleRootInt / i) == math.Trunc(simpleRootInt/i) {
-			if !(i == simpleRootInt) && !(i == 1) {
-				if math.Sqrt(simpleRootInt/i) == math.Trunc(math.Sqrt(simpleRootInt/i)) {
-					simpleRootInt = i
-					rootCoefficient = rootCoefficient * int64(math.Sqrt(root/i))
-				}
-			}
-		}
+	distStr := junglemath.CalcDistance(x1, y1, x2, y2, "dec")
+	dist, err := strconv.ParseFloat(distStr, 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+	rootStr := junglemath.CalcDistance(x1, y1, x2, y1, "rad")
+	rootStr, success := strings.CutPrefix(rootStr, "√")
+	root, err := strconv.ParseFloat(rootStr, 64)
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	simpleRoot := strconv.FormatInt(rootCoefficient, 10) + "√" +
-		strconv.FormatFloat(simpleRootInt, 'f', -1, 64)
+	sqrtDist := junglemath.CalcDistance(x1, y1, x2, y2, "rad")
+
+	if !success {
+		log.Fatal("unable to cut prefix of " + rootStr)
+	}
+	simpleRoot := junglemath.CalcDistance(x1, y1, x2, y2, "simpRad")
+
+	simpleRootInt, _ := strconv.ParseFloat(strings.TrimLeft(simpleRoot, "√"), 64)
 
 	var response string
 	if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
