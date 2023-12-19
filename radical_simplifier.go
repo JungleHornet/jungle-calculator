@@ -36,11 +36,13 @@ func simplifyRadical() bool {
 	var simpleRoot string
 	if rootCoefficient == 1 {
 		simpleRoot = "√" + strconv.FormatFloat(root, 'f', -1, 64)
-	} else if simpleRootInt == root {
-		simpleRoot = "√" + strconv.FormatFloat(root, 'f', -1, 64)
 	} else {
 		simpleRoot = strconv.FormatInt(rootCoefficient, 10) + "√" +
 			strconv.FormatFloat(simpleRootInt, 'f', -1, 64)
+	}
+
+	if math.Sqrt(root) == math.Trunc(math.Sqrt(root)) {
+		simpleRoot = simpleRoot + d["str6"] + strconv.FormatFloat(math.Sqrt(root), 'f', -1, 64)
 	}
 
 	fmt.Println(simpleRoot)
