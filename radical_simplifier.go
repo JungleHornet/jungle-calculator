@@ -39,7 +39,7 @@ func simplifyRadical() bool {
 	} else if simpleRootInt == root {
 		simpleRoot = "√" + strconv.FormatFloat(root, 'f', -1, 64)
 	} else {
-		simpleRoot = strconv.FormatInt(rootCoefficient, 'f') + "√" +
+		simpleRoot = strconv.FormatInt(rootCoefficient, 10) + "√" +
 			strconv.FormatFloat(simpleRootInt, 'f', -1, 64)
 	}
 
