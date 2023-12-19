@@ -25,5 +25,6 @@
   "str16": "Please input leg 2 length",
   "str17": "The hypotenuse length is ",
   "str18": "Please input the radicand (number inside the radical)",
-  "str19": "The simplified radical is "
+  "str19": "The simplified radical is ",
+  "str20": "Unable to cut prefix of "
 }

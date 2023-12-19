@@ -57,17 +57,21 @@ func distanceCalc() bool {
 		fmt.Println(err)
 	}
 	rootStr := junglemath.CalcDistance(x1, y1, x2, y1, "rad")
+
 	rootStr, success := strings.CutPrefix(rootStr, "√")
+
+	if !success {
+		log.Fatal(d["str20"] + "\"" + rootStr + "\"")
+	}
+
 	root, err := strconv.ParseFloat(rootStr, 64)
+
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	sqrtDist := junglemath.CalcDistance(x1, y1, x2, y2, "rad")
 
-	if !success {
-		log.Fatal("unable to cut prefix of " + rootStr)
-	}
 	simpleRoot := junglemath.CalcDistance(x1, y1, x2, y2, "simpRad")
 
 	simpleRootInt, _ := strconv.ParseFloat(strings.TrimLeft(simpleRoot, "√"), 64)

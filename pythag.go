@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/junglehornet/junglemath"
+	"log"
 	"math"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func pythag() bool {
@@ -35,30 +38,35 @@ func pythag() bool {
 
 	leg2, err := strconv.ParseFloat(inpt2, 64)
 
-	leg1 = leg1 * leg1
-	leg2 = leg2 * leg2
+	hyp, err := strconv.ParseFloat(junglemath.Pythag(leg1, leg2, "dec"), 64)
+	simpleRoot := junglemath.Pythag(leg1, leg2, "simpRad")
 
-	hyp := math.Sqrt(leg1 + leg2)
-
-	root := math.Round(hyp * hyp)
-	sqrtHyp := "√" + strconv.FormatFloat(root, 'f', -1, 64)
-
-	rootCoefficient := int64(1)
-	simpleRootInt := root
-
-	for i := float64(2); i <= math.Round(math.Sqrt(root)); i++ {
-		if (simpleRootInt / i) == math.Trunc(simpleRootInt/i) {
-			if !(i == simpleRootInt) && !(i == 1) {
-				if math.Sqrt(simpleRootInt/i) == math.Trunc(math.Sqrt(simpleRootInt/i)) {
-					simpleRootInt = i
-					rootCoefficient = rootCoefficient * int64(math.Sqrt(root/i))
-				}
-			}
-		}
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	simpleRoot := strconv.FormatInt(rootCoefficient, 10) + "√" +
-		strconv.FormatFloat(simpleRootInt, 'f', -1, 64)
+	sqrtHyp := junglemath.Pythag(leg1, leg2, junglemath.Radical)
+
+	rootStr, success := strings.CutPrefix(sqrtHyp, "√")
+
+	if !success {
+		log.Fatal(d["str20"] + "\"" + rootStr + "\"")
+	}
+
+	root, err := strconv.ParseFloat(rootStr, 64)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	simpleSqrtHyp := junglemath.Pythag(leg1, leg2, "simpRad")
+
+	simpRootParts := strings.Split(simpleSqrtHyp, "√")
+
+	simpleRootInt, err := strconv.ParseFloat(simpRootParts[2], 64)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	var response string
 	if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
