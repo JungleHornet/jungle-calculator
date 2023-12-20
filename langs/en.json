@@ -28,5 +28,6 @@
   "str18": "Please input the radicand (number inside the radical)",
   "str19": "The simplified radical is ",
   "str20": "Unable to cut prefix of ",
-  "str21": "Please input point 3 (x,y)"
+  "str21": "Please input point 1 (x,y.z)",
+  "str22": "Please input point 2 (x,y,z)"
 }

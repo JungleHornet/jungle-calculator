@@ -107,12 +107,12 @@ func distanceCalc() bool {
 }
 
 func distanceCalc3D() bool {
-	fmt.Println(d["str2"])
+	fmt.Println(d["str21"])
 	s := NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)")
+	re := regexp.MustCompile("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)")
 	inpt1 := re.FindStringSubmatch(inpt)
-	if !(len(inpt1) == 3) {
+	if !(len(inpt1) == 4) {
 		fmt.Println(d["str4"])
 		return true
 	}
@@ -128,10 +128,15 @@ func distanceCalc3D() bool {
 		return true
 	}
 
-	fmt.Println(d["str3"])
+	z1, err := strconv.ParseFloat(inpt1[3], 64)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(d["str22"])
 	inpt = s.ReadLine()
 	inpt2 := re.FindStringSubmatch(inpt)
-	if !(len(inpt2) == 3) {
+	if !(len(inpt2) == 4) {
 		fmt.Println(d["str4"])
 		return true
 	}
@@ -146,32 +151,17 @@ func distanceCalc3D() bool {
 		fmt.Println(err)
 		return true
 	}
-
-	fmt.Println(d["str21"])
-	inpt = s.ReadLine()
-	inpt3 := re.FindStringSubmatch(inpt)
-	if !(len(inpt3) == 3) {
-		fmt.Println(d["str4"])
-		return true
-	}
-
-	x3, err := strconv.ParseFloat(inpt3[1], 64)
+	z2, err := strconv.ParseFloat(inpt1[3], 64)
 	if err != nil {
 		fmt.Println(err)
-		return true
-	}
-	y3, err := strconv.ParseFloat(inpt3[2], 64)
-	if err != nil {
-		fmt.Println(err)
-		return true
 	}
 
-	distStr := junglemath.CalcDistance3D(x1, y1, x2, y2, x3, y3, "dec")
+	distStr := junglemath.CalcDistance3D(x1, y1, z1, x2, y2, z2, "dec")
 	dist, err := strconv.ParseFloat(distStr, 64)
 	if err != nil {
 		fmt.Println(err)
 	}
-	rootStr := junglemath.CalcDistance3D(x1, y1, x2, y1, x3, y3, "rad")
+	rootStr := junglemath.CalcDistance3D(x1, y1, z1, x2, y1, z2, "rad")
 
 	rootStr, success := strings.CutPrefix(rootStr, "√")
 
@@ -185,9 +175,9 @@ func distanceCalc3D() bool {
 		fmt.Println(err)
 	}
 
-	sqrtDist := junglemath.CalcDistance3D(x1, y1, x2, y2, x3, y3, "rad")
+	sqrtDist := junglemath.CalcDistance3D(x1, y1, z1, x2, y1, z2, "rad")
 
-	simpleRoot := junglemath.CalcDistance3D(x1, y1, x2, y2, x3, y3, "simpRad")
+	simpleRoot := junglemath.CalcDistance3D(x1, y1, z1, x2, y1, z2, "simpRad")
 
 	simpleRootInt, _ := strconv.ParseFloat(strings.TrimLeft(simpleRoot, "√"), 64)
 
