@@ -27,7 +27,7 @@
   "str17": "The hypotenuse length is ",
   "str18": "Please input the radicand (number inside the radical)",
   "str19": "The simplified radical is ",
-  "str20": "Unable to cut prefix of ",
+  "str20": "Unable to parse junglemath output. (This should never happen, please report this bug at https://github.com/junglehornet/jungle-calculator/issues/new",
   "str21": "Please input point 1 (x,y.z)",
   "str22": "Please input point 2 (x,y,z)"
 }
