@@ -83,6 +83,7 @@ func main_loop() {
 		fmt.Println(d["func1"])
 		fmt.Println(d["func2"])
 		fmt.Println(d["func3"])
+		fmt.Println(d["func4"])
 		fmt.Println(d["quit"])
 		s := NewScanner()
 		inpt := strings.ToLower(s.ReadLine())

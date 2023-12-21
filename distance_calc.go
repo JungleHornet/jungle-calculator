@@ -151,17 +151,18 @@ func distanceCalc3D() bool {
 		fmt.Println(err)
 		return true
 	}
-	z2, err := strconv.ParseFloat(inpt1[3], 64)
+	z2, err := strconv.ParseFloat(inpt2[3], 64)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	distStr := junglemath.CalcDistance3D(x1, y1, z1, x2, y2, z2, "dec")
+	fmt.Println("distStr: " + distStr)
 	dist, err := strconv.ParseFloat(distStr, 64)
 	if err != nil {
 		fmt.Println(err)
 	}
-	rootStr := junglemath.CalcDistance3D(x1, y1, z1, x2, y1, z2, "rad")
+	rootStr := junglemath.CalcDistance3D(x1, y1, z1, x2, y2, z2, "rad")
 
 	rootStr, success := strings.CutPrefix(rootStr, "√")
 
@@ -175,9 +176,8 @@ func distanceCalc3D() bool {
 		fmt.Println(err)
 	}
 
-	sqrtDist := junglemath.CalcDistance3D(x1, y1, z1, x2, y1, z2, "rad")
-
-	simpleRoot := junglemath.CalcDistance3D(x1, y1, z1, x2, y1, z2, "simpRad")
+	sqrtDist := junglemath.CalcDistance3D(x1, y1, z1, x2, y2, z2, "rad")
+	simpleRoot := junglemath.CalcDistance3D(x1, y1, z1, x2, y2, z2, "simpRad")
 
 	simpleRootInt, _ := strconv.ParseFloat(strings.TrimLeft(simpleRoot, "√"), 64)
 
