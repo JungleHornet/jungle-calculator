@@ -157,7 +157,6 @@ func distanceCalc3D() bool {
 	}
 
 	distStr := junglemath.CalcDistance3D(x1, y1, z1, x2, y2, z2, "dec")
-	fmt.Println("distStr: " + distStr)
 	dist, err := strconv.ParseFloat(distStr, 64)
 	if err != nil {
 		fmt.Println(err)
