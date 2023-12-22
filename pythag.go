@@ -38,8 +38,8 @@ func pythag() bool {
 
 	leg2, err := strconv.ParseFloat(inpt2, 64)
 
-	hyp, err := strconv.ParseFloat(junglemath.Pythag(leg1, leg2, "dec"), 64)
-	simpleRoot := junglemath.Pythag(leg1, leg2, "simpRad")
+	hyp := junglemath.Pythag(leg1, leg2)
+	simpleRoot := junglemath.Pythag(leg1, leg2)
 
 	if err != nil {
 		fmt.Println(err)
