@@ -97,7 +97,7 @@ func main_loop() {
 			run(distanceCalc3D)
 		case "3":
 			fmt.Print("\n\n")
-			// run(pythag)
+			run(pythag)
 		case "4":
 			fmt.Print("\n\n")
 			run(simplifyRadical)

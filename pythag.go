@@ -38,45 +38,53 @@ func pythag() bool {
 
 	leg2, err := strconv.ParseFloat(inpt2, 64)
 
-	hyp := junglemath.Pythag(leg1, leg2)
-	simpleRoot := junglemath.Pythag(leg1, leg2)
-
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	sqrtHyp := junglemath.Pythag(leg1, leg2, "rad")
+	hyp := junglemath.Pythag(leg1, leg2)
 
-	rootStr, success := strings.CutPrefix(sqrtHyp, "√")
+	rootStr, success := junglemath.CreateRoot(junglemath.Pythag(leg1, leg2))
 
 	if !success {
-		log.Fatal(d["str20"] + "\"" + rootStr + "\"")
-	}
-
-	root, err := strconv.ParseFloat(rootStr, 64)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	simpleSqrtHyp := junglemath.Pythag(leg1, leg2, "simpRad")
-
-	simpRootParts := strings.Split(simpleSqrtHyp, "√")
-
-	simpleRootInt, err := strconv.ParseFloat(simpRootParts[1], 64)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	var response string
-	if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
-		response = d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64) + d["str6"] + sqrtHyp
+		fmt.Println(d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64))
 	} else {
-		response = d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64) + d["str7"] + sqrtHyp +
-			d["str8"] + simpleRoot
-	}
 
-	fmt.Println(response)
+		rootStr, success := strings.CutPrefix(rootStr, "√")
+
+		if !success {
+			log.Fatal(d["str20"] + "\"" + rootStr + "\"")
+		}
+
+		root, err := strconv.ParseFloat(rootStr, 64)
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		simpleSqrtHyp, _ := junglemath.CreateRoot(junglemath.Pythag(leg1, leg2))
+
+		sqrtInt := math.Sqrt(root)
+
+		simpleSqrtHyp = junglemath.SimplifyRadical(sqrtInt)
+
+		simpRootParts := strings.Split(simpleSqrtHyp, "√")
+
+		simpleRootInt, err := strconv.ParseFloat(simpRootParts[1], 64)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		var response string
+		if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
+			response = d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64) + d["str6"] + rootStr
+		} else {
+			response = d["str5"] + strconv.FormatFloat(hyp, 'f', -1, 64) + d["str7"] + rootStr +
+				d["str8"] + simpleSqrtHyp
+		}
+
+		fmt.Println(response)
+	}
 
 	for {
 		fmt.Println("\n" + d["str9"])
