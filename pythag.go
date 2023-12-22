@@ -15,7 +15,7 @@ func pythag() bool {
 	fmt.Println(d["str15"])
 	inpt := s.ReadLine()
 
-	re := regexp.MustCompile("\\d*.?\\d*")
+	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
 	inpt1 := re.FindString(inpt)
 	if inpt1 == "" {
 		fmt.Println(d["str4"])

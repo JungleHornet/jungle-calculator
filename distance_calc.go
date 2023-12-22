@@ -14,7 +14,7 @@ func distanceCalc() bool {
 	fmt.Println(d["str2"])
 	s := NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)")
+	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 3) {
 		fmt.Println(d["str4"])
@@ -115,9 +115,9 @@ func distanceCalc3D() bool {
 	fmt.Println(d["str21"])
 	s := NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)\\s*,\\s*(-?\\d*.?\\d*)")
+	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
 	inpt1 := re.FindStringSubmatch(inpt)
-	if !(len(inpt1) == 3) {
+	if !(len(inpt1) == 4) {
 		fmt.Println(d["str4"])
 		return true
 	}
@@ -141,7 +141,7 @@ func distanceCalc3D() bool {
 	fmt.Println(d["str22"])
 	inpt = s.ReadLine()
 	inpt2 := re.FindStringSubmatch(inpt)
-	if !(len(inpt2) == 3) {
+	if !(len(inpt2) == 4) {
 		fmt.Println(d["str4"])
 		return true
 	}
