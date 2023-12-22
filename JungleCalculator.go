@@ -90,16 +90,16 @@ func main_loop() {
 
 		switch inpt {
 		case "1":
-			fmt.Println("\n\n")
+			fmt.Print("\n\n")
 			run(distanceCalc)
 		case "2":
-			fmt.Println("\n\n")
+			fmt.Print("\n\n")
 			run(distanceCalc3D)
 		case "3":
-			fmt.Println("\n\n")
-			run(pythag)
+			fmt.Print("\n\n")
+			// run(pythag)
 		case "4":
-			fmt.Println("\n\n")
+			fmt.Print("\n\n")
 			run(simplifyRadical)
 		case "q":
 			fmt.Println(d["quit"] + d["str10"])
