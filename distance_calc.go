@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/junglehornet/goScan"
 	"github.com/junglehornet/junglemath"
 	"log"
 	"math"
@@ -12,7 +13,7 @@ import (
 
 func distanceCalc() bool {
 	fmt.Println(d["str2"])
-	s := NewScanner()
+	s := goScan.NewScanner()
 	inpt := s.ReadLine()
 	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
 	inpt1 := re.FindStringSubmatch(inpt)
@@ -113,7 +114,7 @@ func distanceCalc() bool {
 
 func distanceCalc3D() bool {
 	fmt.Println(d["str21"])
-	s := NewScanner()
+	s := goScan.NewScanner()
 	inpt := s.ReadLine()
 	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
 	inpt1 := re.FindStringSubmatch(inpt)

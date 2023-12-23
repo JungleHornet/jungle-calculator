@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/junglehornet/goScan"
 	"github.com/junglehornet/junglemath"
 	"math"
 	"strconv"
 )
 
 func simplifyRadical() bool {
-	s := NewScanner()
+	s := goScan.NewScanner()
 	fmt.Println(d["str18"])
 	root, err := strconv.ParseFloat(s.ReadLine(), 64)
 	if root == 0 {

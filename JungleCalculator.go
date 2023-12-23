@@ -1,12 +1,11 @@
 package main
 
 import (
-	"bufio"
 	"embed"
 	_ "embed"
 	"encoding/json"
 	"fmt"
-	"log"
+	"github.com/junglehornet/goScan"
 	"os"
 	"strings"
 )
@@ -27,30 +26,10 @@ func run(myFunc func() bool) {
 	}
 }
 
-type Scanner struct {
-	scanner *bufio.Scanner
-}
-
-func NewScanner() *Scanner {
-	m := &Scanner{
-		scanner: bufio.NewScanner(os.Stdin),
-	}
-	return m
-}
-
-func (m *Scanner) ReadLine() string {
-	m.scanner.Scan()
-	err := m.scanner.Err()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return m.scanner.Text()
-}
-
 func main() {
 	fmt.Println("Please select a language (english (en), magyar (ma) )")
 
-	s := NewScanner()
+	s := goScan.NewScanner()
 
 	langInpt := strings.ToLower(s.ReadLine())
 	var dictFile []byte
@@ -85,7 +64,7 @@ func main_loop() {
 		fmt.Println(d["func3"])
 		fmt.Println(d["func4"])
 		fmt.Println(d["quit"])
-		s := NewScanner()
+		s := goScan.NewScanner()
 		inpt := strings.ToLower(s.ReadLine())
 
 		switch inpt {

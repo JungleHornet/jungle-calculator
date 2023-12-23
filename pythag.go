@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/junglehornet/goScan"
 	"github.com/junglehornet/junglemath"
 	"log"
 	"math"
@@ -11,7 +12,7 @@ import (
 )
 
 func pythag() bool {
-	s := NewScanner()
+	s := goScan.NewScanner()
 	fmt.Println(d["str15"])
 	inpt := s.ReadLine()
 
