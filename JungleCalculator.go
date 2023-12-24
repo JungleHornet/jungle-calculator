@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/junglehornet/goScan"
+	"github.com/junglehornet/junglemath"
 	"os"
 	"strings"
 )
@@ -63,6 +64,7 @@ func main_loop() {
 		fmt.Println(d["func2"])
 		fmt.Println(d["func3"])
 		fmt.Println(d["func4"])
+		fmt.Println(d["func5"])
 		fmt.Println(d["quit"])
 		s := goScan.NewScanner()
 		inpt := strings.ToLower(s.ReadLine())
@@ -70,14 +72,17 @@ func main_loop() {
 		switch inpt {
 		case "1":
 			fmt.Print("\n\n")
-			run(distanceCalc)
+			junglemath.OpenCalculator()
 		case "2":
 			fmt.Print("\n\n")
-			run(distanceCalc3D)
+			run(distanceCalc)
 		case "3":
 			fmt.Print("\n\n")
-			run(pythag)
+			run(distanceCalc3D)
 		case "4":
+			fmt.Print("\n\n")
+			run(pythag)
+		case "5":
 			fmt.Print("\n\n")
 			run(simplifyRadical)
 		case "q":

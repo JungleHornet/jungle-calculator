@@ -1,8 +1,9 @@
 {
-  "func1": "2D Distance Formula (1)",
-  "func2": "3D Distance Formula (2)",
-  "func3": "Pythagorean Theorem (3)",
-  "func4": "Radical Simplifier (4)",
+  "func1": "General Calculator (1)",
+  "func2": "2D Distance Formula (2)",
+  "func3": "3D Distance Formula (3)",
+  "func4": "Pythagorean Theorem (4)",
+  "func5": "Radical Simplifier (5)",
   "quit": "Quit (q)",
 
   "y": "y",
@@ -29,5 +30,6 @@
   "str19": "The simplified radical is ",
   "str20": "Unable to parse junglemath output. (This should never happen, please report this bug at https://github.com/junglehornet/jungle-calculator/issues/new",
   "str21": "Please input point 1 (x,y.z)",
-  "str22": "Please input point 2 (x,y,z)"
+  "str22": "Please input point 2 (x,y,z)",
+  "str23": "Enter an equation or \"q\" to quit"
 }
