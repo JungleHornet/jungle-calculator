@@ -72,6 +72,7 @@ func main_loop() {
 		switch inpt {
 		case "1":
 			fmt.Print("\n\n")
+			fmt.Println(d["str23"])
 			junglemath.OpenCalculator()
 		case "2":
 			fmt.Print("\n\n")
