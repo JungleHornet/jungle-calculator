@@ -65,7 +65,7 @@ func pythag() bool {
 
 		simpleSqrtHyp, _ := junglemath.CreateRoot(junglemath.Pythag(leg1, leg2))
 
-		sqrtInt := math.Sqrt(root)
+		sqrtInt := root
 
 		simpleSqrtHyp = junglemath.SimplifyRadical(sqrtInt)
 
@@ -75,6 +75,8 @@ func pythag() bool {
 		if err != nil {
 			fmt.Println(err)
 		}
+
+		rootStr = "√" + rootStr
 
 		var response string
 		if (math.Sqrt(root) == math.Trunc(math.Sqrt(root))) || simpleRootInt == root {
