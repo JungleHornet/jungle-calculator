@@ -1,4 +1,4 @@
-module github.com/JungleHornet/jungle-calculator
+module github.com/junglehornet/jungle-calculator
 
 go 1.21.5
 
