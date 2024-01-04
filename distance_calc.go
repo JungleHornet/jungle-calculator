@@ -15,7 +15,7 @@ func distanceCalc() bool {
 	fmt.Println(d["str2"])
 	s := goScan.NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("(-?\\d*.?\\d*),(-?\\d*.?\\d*)/gx")
+	re := regexp.MustCompile('\(?(-?\d*.?\d*),(-?\d*.?\d*)\)?')
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 3) {
 		fmt.Println(d["str4"])
@@ -116,7 +116,8 @@ func distanceCalc3D() bool {
 	fmt.Println(d["str21"])
 	s := goScan.NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
+	inpt = strings.ToLower(inpt)
+	re := regexp.MustCompile('\(?-?\d*.?\d*),(-?\d*.?\d*),(-?\d*.?\d*)\)?')
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 4) {
 		fmt.Println(d["str4"])
