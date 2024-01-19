@@ -1,10 +1,17 @@
 {
-  "func1": "General Calculator (1)",
-  "func2": "2D Distance Formula (2)",
-  "func3": "3D Distance Formula (3)",
-  "func4": "Pythagorean Theorem (4)",
-  "func5": "Radical Simplifier (5)",
+  "func1": "Calculator (1)",
+  "func2": "Distance Formula (2)",
+  "func3": "Triangle Operations (3)",
+  "func4": "Miscellaneous Functions (4)",
+  "back": "Back (b)",
   "quit": "Quit (q)",
+
+  "dist1": "2D Distance Formula (1)",
+  "dist2": "3D Distance Formula (2)",
+
+  "tri1": "Pythagorean Theorem (1)",
+
+  "misc1": "Radical Simplifier (1)",
 
   "y": "y",
   "n": "n",

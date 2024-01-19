@@ -64,7 +64,6 @@ func main_loop() {
 		fmt.Println(d["func2"])
 		fmt.Println(d["func3"])
 		fmt.Println(d["func4"])
-		fmt.Println(d["func5"])
 		fmt.Println(d["quit"])
 		s := goScan.NewScanner()
 		inpt := strings.ToLower(s.ReadLine())
@@ -76,22 +75,74 @@ func main_loop() {
 			junglemath.OpenCalculator()
 		case "2":
 			fmt.Print("\n\n")
-			run(distanceCalc)
+			func2Loop(s)
 		case "3":
 			fmt.Print("\n\n")
-			run(distanceCalc3D)
+			func3Loop(s)
 		case "4":
 			fmt.Print("\n\n")
-			run(pythag)
-		case "5":
-			fmt.Print("\n\n")
-			run(simplifyRadical)
+			func4Loop(s)
 		case "q":
 			fmt.Println(d["quit"] + d["str10"])
 			os.Exit(0)
 		default:
 			fmt.Println(d["str14"])
 
+		}
+	}
+}
+
+func func2Loop(s *goScan.Scanner) {
+	for {
+		fmt.Println(d["str13"])
+		fmt.Println(d["dist1"])
+		fmt.Println(d["dist2"])
+		fmt.Println(d["back"])
+		inpt := strings.ToLower(s.ReadLine())
+		switch inpt {
+		case "1":
+			fmt.Print("\n\n")
+			run(distanceCalc)
+		case "2":
+			fmt.Print("\n\n")
+			run(distanceCalc3D)
+		case "b":
+			fmt.Print("\n\n")
+			return
+		}
+	}
+}
+
+func func3Loop(s *goScan.Scanner) {
+	for {
+		fmt.Println(d["str13"])
+		fmt.Println(d["tri1"])
+		fmt.Println(d["back"])
+		inpt := strings.ToLower(s.ReadLine())
+		switch inpt {
+		case "1":
+			fmt.Print("\n\n")
+			run(pythag)
+		case "b":
+			fmt.Print("\n\n")
+			return
+		}
+	}
+}
+
+func func4Loop(s *goScan.Scanner) {
+	for {
+		fmt.Println(d["str13"])
+		fmt.Println(d["misc1"])
+		fmt.Println(d["back"])
+		inpt := strings.ToLower(s.ReadLine())
+		switch inpt {
+		case "1":
+			fmt.Print("\n\n")
+			run(simplifyRadical)
+		case "b":
+			fmt.Print("\n\n")
+			return
 		}
 	}
 }

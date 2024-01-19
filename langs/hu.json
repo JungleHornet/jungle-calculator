@@ -1,10 +1,17 @@
 {
-  "func1": "\u00C1ltal\u00E1nos sz\u00E1mol\u00F3g\u00E9p (1)",
-  "func2": "2D t\u00E1vols\u00E1gi k\u00E9plet (2)",
-  "func3": "3D t\u00E1vols\u00E1gi k\u00E9plet (3)",
-  "func4": "Pitagorasz-t\u00E9tel (4)",
-  "func5": "Radik\u00E1lis egyszer\u0171sít\u0151 (5)",
+  "func1": "sz\u00E1mol\u00F3g\u00E9p (1)",
+  "func2": "t\u00E1vols\u00E1gi k\u00E9plet (2)",
+  "func3": "Triangle Operations (3)",
+  "func4": "Miscellaneous Functions (4)",
+  "back": "Vissza (b)",
   "quit": "Kil\u00E9p\u00E9s (q)",
+
+  "dist1": "2D t\u00E1vols\u00E1gi k\u00E9plet (1)",
+  "dist2": "3D t\u00E1vols\u00E1gi k\u00E9plet (2)",
+
+  "tri1": "Pitagorasz-t\u00E9tel (1)",
+
+  "misc1": "Radik\u00E1lis egyszer\u0171sít\u0151 (1)",
 
   "y": "i",
   "n": "n",
