@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/junglehornet/goScan"
-	"github.com/junglehornet/junglemath"
 	"math"
 	"strconv"
+
+	"github.com/junglehornet/goScan"
+	"github.com/junglehornet/junglemath"
 )
 
 func simplifyRadical() bool {
@@ -29,23 +30,6 @@ func simplifyRadical() bool {
 
 	fmt.Println(simpleRoot)
 
-	for {
-		fmt.Println("\n" + d["str9"])
-		yn := s.ReadLine()
-
-		switch yn {
-		case "y":
-			fmt.Println(d["str12"])
-			return true
-
-		case "n":
-			fmt.Println(d["n"] + d["str10"])
-			return false
-
-		default:
-			fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
-			return false
-		}
-	}
+	return yn()
 
 }

@@ -2,20 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/junglehornet/goScan"
-	"github.com/junglehornet/junglemath"
 	"log"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
+	"github.com/junglehornet/goScan"
+	"github.com/junglehornet/junglemath"
 )
 
 func distanceCalc() bool {
 	fmt.Println(d["str2"])
 	s := goScan.NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile('\(?(-?\d*.?\d*),(-?\d*.?\d*)\)?')
+	re := regexp.MustCompile("\\(?(-?\\d*.?\\d*),(-?\\d*.?\\d*)\\)?")
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 3) {
 		fmt.Println(d["str4"])
@@ -92,24 +92,7 @@ func distanceCalc() bool {
 		fmt.Println(response)
 	}
 
-	for {
-		fmt.Println("\n" + d["str9"])
-		yn := s.ReadLine()
-
-		switch yn {
-		case "y":
-			fmt.Println(d["str12"])
-			return true
-
-		case "n":
-			fmt.Println(d["n"] + d["str10"])
-			return false
-
-		default:
-			fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
-			return false
-		}
-	}
+	return yn()
 }
 
 func distanceCalc3D() bool {
@@ -117,7 +100,7 @@ func distanceCalc3D() bool {
 	s := goScan.NewScanner()
 	inpt := s.ReadLine()
 	inpt = strings.ToLower(inpt)
-	re := regexp.MustCompile('\(?-?\d*.?\d*),(-?\d*.?\d*),(-?\d*.?\d*)\)?')
+	re := regexp.MustCompile(`\(?(-?\d*.?\d*),(-?\d*.?\d*),(-?\d*.?\d*)\)?`)
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 4) {
 		fmt.Println(d["str4"])
@@ -204,22 +187,5 @@ func distanceCalc3D() bool {
 		fmt.Println(response)
 	}
 
-	for {
-		fmt.Println("\n" + d["str9"])
-		yn := s.ReadLine()
-
-		switch yn {
-		case "y":
-			fmt.Println(d["str12"])
-			return true
-
-		case "n":
-			fmt.Println(d["n"] + d["str10"])
-			return false
-
-		default:
-			fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
-			return false
-		}
-	}
+	return yn()
 }

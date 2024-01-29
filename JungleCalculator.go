@@ -5,10 +5,10 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
-	"github.com/junglehornet/goScan"
-	"github.com/junglehornet/junglemath"
 	"os"
 	"strings"
+	"github.com/junglehornet/goScan"
+	"github.com/junglehornet/junglemath"
 )
 
 //go:embed langs
@@ -117,12 +117,28 @@ func func3Loop(s *goScan.Scanner) {
 	for {
 		fmt.Println(d["str13"])
 		fmt.Println(d["tri1"])
+		fmt.Println(d["tri2"])
+		fmt.Println(d["tri3"])
+		fmt.Println(d["tri4"])
+		fmt.Println(d["tri5"])
 		fmt.Println(d["back"])
 		inpt := strings.ToLower(s.ReadLine())
 		switch inpt {
 		case "1":
 			fmt.Print("\n\n")
 			run(pythag)
+		case "2":
+			fmt.Print("\n\n")
+			run(orthocenter)
+		case "3":
+			fmt.Print("\n\n")
+			run(circumcenter)
+		case "4":
+			fmt.Print("\n\n")
+			run(centroid)
+		case "5":
+			fmt.Print("\n\n")
+			run(incenter)
 		case "b":
 			fmt.Print("\n\n")
 			return
@@ -144,5 +160,25 @@ func func4Loop(s *goScan.Scanner) {
 			fmt.Print("\n\n")
 			return
 		}
+	}
+}
+
+func yn() bool {
+	s := goScan.NewScanner()
+	fmt.Println("\n" + d["str9"])
+	yn := s.ReadLine()
+
+	switch yn {
+	case "y":
+		fmt.Println(d["str12"])
+		return true
+
+	case "n":
+		fmt.Println(d["n"] + d["str10"])
+		return false
+
+	default:
+		fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
+		return false
 	}
 }

@@ -10,6 +10,10 @@
   "dist2": "3D Distance Formula (2)",
 
   "tri1": "Pythagorean Theorem (1)",
+  "tri2": "Orthocenter (2)",
+  "tri3": "Circumcenter (3)",
+  "tri4": "Centroid (4)",
+  "tri5": "Incenter (5)",
 
   "misc1": "Radical Simplifier (1)",
 
@@ -36,7 +40,12 @@
   "str18": "Please input the radicand (number inside the radical)",
   "str19": "The simplified radical is ",
   "str20": "Unable to parse junglemath output. (This should never happen, please report this bug at https://github.com/junglehornet/jungle-calculator/issues/new",
-  "str21": "Please input point 1 (x,y.z)",
+  "str21": "Please input point 1 (x,y,z)",
   "str22": "Please input point 2 (x,y,z)",
-  "str23": "Enter an equation or \"q\" to quit"
+  "str23": "Enter an equation or \"q\" to quit",
+  "str24": "Please input point 3 (x,y)",
+  "str25": "The Orthocenter is ",
+  "str26": "The Circumcenter is ",
+  "str27": "The Centroid is ",
+  "str28": "The Incenter is "
 }
