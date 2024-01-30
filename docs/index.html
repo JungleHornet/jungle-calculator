@@ -5,23 +5,21 @@
         <script src="wasm_exec.js"></script>
         <script>
              
-            if (WebAssembly) {
-                 // WebAssembly.instantiateStreaming is not currently available in Safari
-                 if (WebAssembly && !WebAssembly.instantiateStreaming) { // polyfill
-                     WebAssembly.instantiateStreaming = async (resp, importObject) => {
-                        const source = await (await resp).arrayBuffer();
-                         return await WebAssembly.instantiate(source, importObject);
-                     };
-                 }  
- 
-                 const go = new Go();
-                 WebAssembly.instantiateStreaming(fetch("jungle-calculator.wasm"), go.importObject).then((result) => {
+             fetch('main.wasm').then(response => response.arrayBuffer()).then(function(bin) {
+            input.addEventListener('keydown', function(e) {
+                if (e.keyCode !== 13)  // Enter
+                    return;
+
+                e.preventDefault();
+
+                const go = new Go();
+                go.argv = ['uni'].concat(this.value.split(' '));
+                this.value = '';
+                WebAssembly.instantiate(bin, go.importObject).then((result) => {
                     go.run(result.instance);
-                 });
-            } else {
-               console.log("WebAssembly is not supported in your browser")
-            }
- 
+                });
+            });
+        });
         </script>
         <script>
             window.console = {
