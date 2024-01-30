@@ -16,7 +16,7 @@
 </head>
 <body class="light">
 	<pre id="output"></pre>
-	<div><span>$ uni&nbsp;</span><input id="input" disabled placeholder="Loading WebAssembly binary..."></div>
+	<div><input id="input" disabled placeholder="Loading WebAssembly binary..."></div>
 	<p>uni WebAssembly demo; <a href="https://github.com/arp242/uni">homepage</a>, <a href="https://www.arp242.net/wasm-cli.html">details</a>. Type <code>help</code> for usage; the <a href="https://github.com/arp242/uni/#usage">README</a> has more examples.</a></p>
 
 	<p>
@@ -41,7 +41,7 @@
 				window.input.placeholder = 'Ready!';
 				window.input.disabled = false;
 
-				readline('uni', window.output, window.input, function(cmd) {
+				readline('', window.output, window.input, function(cmd) {
 					window.input.placeholder = '';
 					const go = new Go();
 					go.argv = cmd;
