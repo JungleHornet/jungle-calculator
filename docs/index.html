@@ -30,6 +30,39 @@
   }
 }
         </script>
+        <script>
+            fetch('jungle-calculator.wasm').then(response => response.arrayBuffer()).then(function(bin) {
+                    input.addEventListener('keydown', function(e) {
+                        if (e.keyCode !== 13)  // Enter
+                            return;
+        
+                        e.preventDefault();
+        
+                        const go = new Go();
+                        go.argv = ['uni'].concat(this.value.split(' '));
+                        this.value = '';
+        
+                        // Write stdout to terminal.
+                        let outputBuf = '';
+                        const decoder = new TextDecoder("utf-8");
+                        global.fs.writeSync = function(fd, buf) {
+                            outputBuf += decoder.decode(buf);
+                            const nl = outputBuf.lastIndexOf("\n");
+                            if (nl != -1) {
+                                window.output.innerText += outputBuf.substr(0, nl + 1);
+                                window.scrollTo(0, document.body.scrollHeight);
+                                outputBuf = outputBuf.substr(nl + 1);
+                            }
+                            return buf.length;
+                        };
+        
+                        WebAssembly.instantiate(bin, go.importObject).then((result) => {
+                            go.run(result.instance);
+                        });
+                    });
+                });
+        </script>
+        
     </head>
     <body>
         <main id="wasm"></main>
