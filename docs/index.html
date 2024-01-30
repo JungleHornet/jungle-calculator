@@ -44,11 +44,13 @@
 				readline('', window.output, window.input, function(cmd) {
 					window.input.placeholder = '';
 					const go = new Go();
+					/*
 					go.argv = cmd;
 					go.exit = (code) => {
 						if (code > 0)
 							output.innerText += 'Exit ' + code + '\n';
 					};
+					*/
 
 					WebAssembly.instantiate(bin, go.importObject).then((result) => {
 						go.run(result.instance);
