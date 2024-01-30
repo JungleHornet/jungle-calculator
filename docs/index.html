@@ -5,7 +5,7 @@
         <script src="wasm_exec.js"></script>
         <script>
              
-             fetch('main.wasm').then(response => response.arrayBuffer()).then(function(bin) {
+             fetch('jungle-calculator.wasm').then(response => response.arrayBuffer()).then(function(bin) {
             input.addEventListener('keydown', function(e) {
                 if (e.keyCode !== 13)  // Enter
                     return;
