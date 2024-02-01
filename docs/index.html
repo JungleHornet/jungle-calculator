@@ -13,6 +13,8 @@
 		p             { font: 14px sans-serif; margin-top: 1em; }
 		div           { display: flex; }
 	</style>
+	<link rel="stylesheet" href="node_modules/xterm/css/xterm.css">
+	<script src="node_modules/xterm/lib/xterm.js"></script>
 </head>
 <body class="light">
 	<pre id="output"></pre>
@@ -27,7 +29,7 @@
 		· Up/down arrows to cycle history, ^L to clear the screen.</p>
 
 	<script src="wasm_exec.js"></script>
-	<script src="term.js"></script>
+	<script src="term.js.disabled"></script>
 	<script>
 		(function() {
 			if (!('WebAssembly' in window)) {
