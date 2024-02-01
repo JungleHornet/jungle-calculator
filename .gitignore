@@ -25,3 +25,12 @@
 /build/distance-calc/warn-distance-calc.txt
 /build/distance-calc/xref-distance-calc.html
 /.idea
+go.sum
+jungle-calculator
+build/jungle-calculator-linux_arm64.tar.gz
+build/jungle-calculator-windows_arm64.zip
+build/jungle-calculator-macos_arm64.tar.gz
+.gitignore
+build/jungle-calculator-windows64.zip
+build/jungle-calculator-linux64.tar.gz
+build/jungle-calculator-macos64.tar.gz
