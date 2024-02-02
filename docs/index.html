@@ -18,7 +18,13 @@
 </head>
 <body class="light">
 	<pre id="output"></pre>
-	<div><input id="input" disabled placeholder="Loading WebAssembly binary..."></div>
+	<!-- <input id="input" disabled placeholder="Loading WebAssembly binary..."> -->
+	<div id="terminal"></div>
+	<script>
+        var term = new Terminal();
+        term.open(document.getElementById('terminal'));
+        term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+      </script>
 	<p>uni WebAssembly demo; <a href="https://github.com/arp242/uni">homepage</a>, <a href="https://www.arp242.net/wasm-cli.html">details</a>. Type <code>help</code> for usage; the <a href="https://github.com/arp242/uni/#usage">README</a> has more examples.</a></p>
 
 	<p>
@@ -27,7 +33,6 @@
 		<button class="sepia">Sepia</button>
 		· <button class="permalink">Permalink to last command</button>
 		· Up/down arrows to cycle history, ^L to clear the screen.</p>
-
 	<script src="wasm_exec.js"></script>
 	<!-- <script src="term.js"></script> -->
 	<script>
