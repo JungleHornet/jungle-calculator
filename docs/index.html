@@ -35,87 +35,18 @@
 		· Up/down arrows to cycle history, ^L to clear the screen.</p>
 	<script src="wasm_exec.js"></script>
 	<!-- <script src="term.js"></script> -->
-	<script>
-		(function() {
-			if (!('WebAssembly' in window)) {
-				document.body.innerText = 'Sorry, you need a browser with WebAssembly support';
-				return;
-			}
-
-			set_output(window.output);
-
-			fetch('jungle-calculator.wasm').then(response => response.arrayBuffer()).then(function(bin) {
-				window.input.placeholder = 'Ready!';
-				window.input.disabled = false;
-
-				readline('', window.output, window.input, function(cmd) {
-					window.input.placeholder = '';
-					const go = new Go();
-					/*
-					go.argv = cmd;
-					go.exit = (code) => {
-						if (code > 0)
-							output.innerText += 'Exit ' + code + '\n';
-					};
-					*/
-
-					WebAssembly.instantiate(bin, go.importObject).then((result) => {
-						go.run(result.instance);
-					});
-				});
+	
+		<html>
+	<head>
+		<meta charset="utf-8"/>
+		<script src="wasm_exec.js"></script>
+		<script>
+			const go = new Go();
+			WebAssembly.instantiateStreaming(fetch("jungle-calculator.wasm"), go.importObject).then((result) => {
+				go.run(result.instance);
 			});
-		})();
-	</script>
-
-	<script>
-		if (location.hash !== '') {
-			location.hash.substr(1).split(',').forEach((i) => {
-				i = decodeURIComponent(i)
-				if (i.indexOf('color:') === 0)
-					return document.body.className = i.substr(6)
-				if (i.indexOf('run:') === 0) {
-					input.value = i.substr(4)
-
-					var event = document.createEvent('KeyboardEvent')
-					event.initKeyboardEvent('keydown', true, true, window, false, false, false, false, 13, 0)
-					// Keep trying until everything is loaded and the event is actually handled
-					var t = setInterval(function() {
-						if (!input.dispatchEvent(event))  // Returns false when handled, not an error (loljs)
-							clearInterval(t)
-					}, 10)
-				}
-			})
-			if (document.body.className !== '')
-				location.hash = 'color:' + document.body.className
-		}
-
-		document.querySelectorAll('button').forEach((elem) => {
-			elem.addEventListener('click', (e) => {
-				e.preventDefault()
-
-				if (elem.className == 'permalink') {
-					var event = document.createEvent('KeyboardEvent')
-					event.initKeyboardEvent('keydown', true, true, window, false, false, false, false, 38, 0)
-					input.dispatchEvent(event)
-					var cmd = input.value
-
-					var event = document.createEvent('KeyboardEvent')
-					event.initKeyboardEvent('keydown', true, true, window, false, false, false, false, 40, 0)
-					input.dispatchEvent(event)
-
-					if (cmd === '')
-						return alert('No command yet')
-
-					var loc = location + ''
-					alert(loc + (location.hash.length > 1 ? ',' : '#') + encodeURIComponent('run:' + cmd))
-					return input.focus()
-				}
-
-				document.body.className = elem.className
-				location.hash = 'color:' + elem.className
-				input.focus()
-			})
-		});
-	</script>
+		</script>
+	</head>
+	<body>
 </body>
 </html>
