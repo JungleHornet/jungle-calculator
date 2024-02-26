@@ -1,3 +1,21 @@
+/*
+JungleCalculator - An open-source Go calculator for advanced math functions.
+Copyright (c) 2023-present  JungleHornet
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 package main
 
 import (
@@ -15,7 +33,7 @@ func distanceCalc() bool {
 	fmt.Println(d["str2"])
 	s := goScan.NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("(-?\\d*.?\\d*),(-?\\d*.?\\d*)/gx")
+	re := regexp.MustCompile("\\(?(-?\\d*.?\\d*),(-?\\d*.?\\d*)\\)?")
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 3) {
 		fmt.Println(d["str4"])
@@ -92,31 +110,15 @@ func distanceCalc() bool {
 		fmt.Println(response)
 	}
 
-	for {
-		fmt.Println("\n" + d["str9"])
-		yn := s.ReadLine()
-
-		switch yn {
-		case "y":
-			fmt.Println(d["str12"])
-			return true
-
-		case "n":
-			fmt.Println(d["n"] + d["str10"])
-			return false
-
-		default:
-			fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
-			return false
-		}
-	}
+	return yn()
 }
 
 func distanceCalc3D() bool {
 	fmt.Println(d["str21"])
 	s := goScan.NewScanner()
 	inpt := s.ReadLine()
-	re := regexp.MustCompile("\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*,\\s*(-?\\s*\\d*\\s*.?\\s*\\d*)\\s*")
+	inpt = strings.ToLower(inpt)
+	re := regexp.MustCompile(`\(?(-?\d*.?\d*),(-?\d*.?\d*),(-?\d*.?\d*)\)?`)
 	inpt1 := re.FindStringSubmatch(inpt)
 	if !(len(inpt1) == 4) {
 		fmt.Println(d["str4"])
@@ -203,22 +205,5 @@ func distanceCalc3D() bool {
 		fmt.Println(response)
 	}
 
-	for {
-		fmt.Println("\n" + d["str9"])
-		yn := s.ReadLine()
-
-		switch yn {
-		case "y":
-			fmt.Println(d["str12"])
-			return true
-
-		case "n":
-			fmt.Println(d["n"] + d["str10"])
-			return false
-
-		default:
-			fmt.Println(d["y"] + d["str6"] + d["n"] + d["str11"])
-			return false
-		}
-	}
+	return yn()
 }
