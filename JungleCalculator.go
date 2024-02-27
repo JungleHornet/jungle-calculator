@@ -26,12 +26,21 @@ import (
 	"github.com/junglehornet/goScan"
 	"github.com/junglehornet/junglemath"
 	"os"
+	"strconv"
 	"strings"
 )
 
 //go:embed langs
 var f embed.FS
 var en, hu []byte
+
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
 
 func init() {
 	en, _ = f.ReadFile("langs/en.json")
@@ -45,34 +54,79 @@ func run(myFunc func() bool) {
 	}
 }
 
-func main() {
-	fmt.Println("Please select a language (english (en), magyar (ma) )")
-
-	s := goScan.NewScanner()
-
-	langInpt := strings.ToLower(s.ReadLine())
-	var dictFile []byte
-	switch langInpt {
-	case "en":
-		fmt.Println("English selected.")
-		dictFile = en
-
-	case "ma":
-		fmt.Println("Magyar válogatott.")
-		dictFile = hu
-
-	default:
-		fmt.Println("Language not recognised, defaulting to english.")
-		dictFile = en
+func getJson() ([]byte, error) {
+	var homeDir string
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		if fileExists(homeDir + "/jcalc/vars.json") {
+			return os.ReadFile(homeDir + "/jcalc/vars.json")
+		} else {
+			_, err := os.Create(homeDir + "/jcalc/vars.json")
+			if err != nil {
+				return nil, err
+			}
+			return os.ReadFile(homeDir + "/jcalc/vars.json")
+		}
 	}
+	return nil, nil
+}
 
-	err := json.Unmarshal(dictFile, &d)
+/*
+func getStoredVar(name string, varfile []byte) StoredVar {
+	m := map[string]StoredVar{}
+	err := json.Unmarshal(varfile, &m)
+	if err != nil {
+		return StoredVar{}
+	}
+	for i := range m {
+		if m[i].Name == name {
+			return m[i]
+		}
+	}
+	return StoredVar{}
+}
+*/
+
+func getVar(name string, varfile []byte) interface{} {
+	var vars map[string]map[string]any
+	err := json.Unmarshal(varfile, &vars)
+	if err != nil {
+		return nil
+	}
+	Var := vars[name]
+	vartype := Var["type"]
+	return vartype
+}
+
+func main() {
+	varfile, err := getJson()
 	if err != nil {
 		fmt.Println(err)
 	}
+	fmt.Println(getVar("test", varfile))
+	args := os.Args
+	if len(args) > 1 {
+		switch args[1] {
+		case "-f":
+			if len(args) > 2 {
+				switch args[2] {
+				case "calc":
+					junglemath.OpenCalculator()
+					return
+				case "pythag":
+					if len(args) > 4 {
+						num1, _ := strconv.ParseFloat(args[3], 64)
+						num2, _ := strconv.ParseFloat(args[4], 64)
+						fmt.Println(junglemath.Pythag(num1, num2))
 
-	fmt.Println(d["str1"])
-	main_loop()
+						return
+					}
+				}
+			}
+		}
+	}
 }
 
 func main_loop() {
