@@ -26,7 +26,7 @@
 /build/distance-calc/xref-distance-calc.html
 /.idea
 go.sum
-jungle-calculator
+jcalc
 build/jungle-calculator-linux_arm64.tar.gz
 build/jungle-calculator-windows_arm64.zip
 build/jungle-calculator-macos_arm64.tar.gz
