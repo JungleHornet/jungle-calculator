@@ -17,7 +17,7 @@ It currently has the following functions:
 
 To use, follow the console intructions.
 
-Note About Git Repo: dev branch is for development and once a release is completed (and pulled into dev if required) dev can then be pulled into main then recreated.
+Note About Git Repo: dev branch is for development and once a release is completed (and pulled into dev if required) dev can then be pulled into main then recreated when needed.
 
 Features to add :
 - ?

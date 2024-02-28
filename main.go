@@ -41,9 +41,16 @@ func getJson() ([]byte, error) {
 		fmt.Println(err)
 	} else {
 		if fileExists(homeDir + "/jcalc/vars.json") {
+			fmt.Println("file exists")
 			return os.ReadFile(homeDir + "/jcalc/vars.json")
 		} else {
-			_, err := os.Create(homeDir + "/jcalc/vars.json")
+			fmt.Println("file does not exist 1")
+			if fileExists(homeDir + "/jcalc/") {
+				_, err = os.Create(homeDir + "/jcalc/vars.json")
+			} else {
+				os.Mkdir(homeDir+"/jcalc/", 0755)
+				_, err = os.Create(homeDir + "/jcalc/vars.json")
+			}
 			if err != nil {
 				return nil, err
 			}
