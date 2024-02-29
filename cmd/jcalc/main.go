@@ -143,17 +143,16 @@ func main() {
 					varName := args[3]
 					switch varType {
 					case "point":
-						if argLen > 5 {
-							x, _ := strconv.ParseFloat(args[4], 64)
-							y, _ := strconv.ParseFloat(args[5], 64)
-							writeVar(varName, junglemath.Point{X: x, Y: y, Z: 0}, varfile)
-							return
-						}
 						if argLen > 6 {
 							x, _ := strconv.ParseFloat(args[4], 64)
 							y, _ := strconv.ParseFloat(args[5], 64)
 							z, _ := strconv.ParseFloat(args[6], 64)
 							writeVar(varName, junglemath.Point{X: x, Y: y, Z: z}, varfile)
+							return
+						} else if argLen > 5 {
+							x, _ := strconv.ParseFloat(args[4], 64)
+							y, _ := strconv.ParseFloat(args[5], 64)
+							writeVar(varName, junglemath.Point{X: x, Y: y, Z: 0}, varfile)
 							return
 						}
 					case "line":
@@ -169,10 +168,9 @@ func main() {
 						}
 					case "triangle":
 						if argLen > 6 {
-							fmt.Println(getVar(args[5], varfile))
-							a := toPoint(getVar(args[5], varfile))
-							b := toPoint(getVar(args[6], varfile))
-							c := toPoint(getVar(args[7], varfile))
+							a := toPoint(getVar(args[4], varfile))
+							b := toPoint(getVar(args[5], varfile))
+							c := toPoint(getVar(args[6], varfile))
 							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
 							} else {
