@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"github.com/junglehornet/junglemath"
 	"os"
+	"reflect"
 	"strconv"
 )
 
@@ -41,10 +42,8 @@ func getJson() ([]byte, error) {
 		fmt.Println(err)
 	} else {
 		if fileExists(homeDir + "/jcalc/vars.json") {
-			fmt.Println("file exists")
 			return os.ReadFile(homeDir + "/jcalc/vars.json")
 		} else {
-			fmt.Println("file does not exist 1")
 			if fileExists(homeDir + "/jcalc/") {
 				_, err = os.Create(homeDir + "/jcalc/vars.json")
 			} else {
@@ -63,7 +62,7 @@ func getJson() ([]byte, error) {
 	return nil, nil
 }
 
-func getVar(name string, varfile []byte) interface{} {
+func getVar(name string, varfile []byte) any {
 	var vars map[string]map[string]any
 	err := json.Unmarshal(varfile, &vars)
 	if err != nil {
@@ -74,23 +73,49 @@ func getVar(name string, varfile []byte) interface{} {
 	return vartype
 }
 
-func main() {
-	varfile, err := getJson()
+func writeVar(name string, Var any, varfile []byte) {
+	vars := make(map[string]map[string]any)
+	err := json.Unmarshal(varfile, &vars)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(getVar("test", varfile))
+	vars[name] = make(map[string]any)
+	vars[name]["type"] = reflect.TypeOf(Var).String()
+	marshaled, err := json.Marshal(vars)
+	if err != nil {
+		return
+	}
+	homeDir, err := os.UserHomeDir()
+	err = os.WriteFile(homeDir+"/jcalc/vars.json", marshaled, 0644)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+}
+
+func invCom() {
+	fmt.Println("Error: Invalid command. Run jcalc -help for usage.")
+}
+
+func main() {
+	varfile, err := getJson()
+	// Use varFile so compiler shuts up
+	_ = varfile
+	if err != nil {
+		fmt.Println(err)
+	}
 	args := os.Args
-	if len(args) > 1 {
+	argLen := len(args)
+	if argLen > 1 {
 		switch args[1] {
 		case "-f":
-			if len(args) > 2 {
+			if argLen > 2 {
 				switch args[2] {
 				case "calc":
 					junglemath.OpenCalculator()
 					return
 				case "pythag":
-					if len(args) > 4 {
+					if argLen > 4 {
 						num1, _ := strconv.ParseFloat(args[3], 64)
 						num2, _ := strconv.ParseFloat(args[4], 64)
 						fmt.Println(junglemath.Pythag(num1, num2))
@@ -98,6 +123,43 @@ func main() {
 					}
 				}
 			}
+		case "new":
+			if argLen > 2 {
+				varType := args[2]
+				if argLen > 3 {
+					varName := args[3]
+					switch varType {
+					case "point":
+						if argLen > 5 {
+							x, _ := strconv.ParseFloat(args[4], 64)
+							y, _ := strconv.ParseFloat(args[5], 64)
+							writeVar(varName, junglemath.Point{X: x, Y: y}, varfile)
+							return
+						}
+						if argLen > 6 {
+							x, _ := strconv.ParseFloat(args[4], 64)
+							y, _ := strconv.ParseFloat(args[5], 64)
+							z, _ := strconv.ParseFloat(args[6], 64)
+							writeVar(varName, junglemath.Point{X: x, Y: y, Z: z}, varfile)
+							return
+						}
+					case "line":
+						if argLen > 5 {
+							p1 := getVar(args[4], varfile)
+							p2 := getVar(args[5], varfile)
+							point1 := p1.(junglemath.Point)
+							point2 := p2.(junglemath.Point)
+							writeVar(varName, junglemath.Line{P1: point1, P2: point2}, varfile)
+							return
+						}
+					case "triangle":
+						return
+					case "angle":
+						return
+					}
+				}
+			}
 		}
 	}
+	invCom()
 }
