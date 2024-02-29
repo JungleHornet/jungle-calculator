@@ -22,4 +22,7 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: make build
+      run:
+        go get github.com/junglehornet/goscan
+        go get github.com/junglehornet/junglemath
+        make build
