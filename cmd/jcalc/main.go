@@ -69,8 +69,8 @@ func getVar(name string, varfile []byte) any {
 		return nil
 	}
 	Var := vars[name]
-	vartype := Var["type"]
-	return vartype
+	delete(Var, "type")
+	return Var
 }
 
 func writeVar(name string, Var any, varfile []byte) {
@@ -80,11 +80,15 @@ func writeVar(name string, Var any, varfile []byte) {
 		fmt.Println(err)
 	}
 	vars[name] = make(map[string]any)
-	vars[name]["type"] = reflect.TypeOf(Var).String()
-	marshaled, err := json.Marshal(vars)
+	marshaledVar, _ := json.Marshal(Var)
+	varMap := vars[name]
+	err = json.Unmarshal(marshaledVar, &varMap)
 	if err != nil {
 		return
 	}
+	vars[name] = varMap
+	vars[name]["type"] = reflect.TypeOf(Var).String()
+	marshaled, _ := json.Marshal(vars)
 	homeDir, err := os.UserHomeDir()
 	err = os.WriteFile(homeDir+"/jcalc/vars.json", marshaled, 0644)
 	if err != nil {
@@ -95,6 +99,15 @@ func writeVar(name string, Var any, varfile []byte) {
 
 func invCom() {
 	fmt.Println("Error: Invalid command. Run jcalc -help for usage.")
+}
+
+func toPoint(m any) junglemath.Point {
+	pointMap := m.(map[string]any)
+	X := pointMap["X"].(float64)
+	Y := pointMap["Y"].(float64)
+	Z := pointMap["Z"].(float64)
+	point := junglemath.Point{X: X, Y: Y, Z: Z}
+	return point
 }
 
 func main() {
@@ -133,7 +146,7 @@ func main() {
 						if argLen > 5 {
 							x, _ := strconv.ParseFloat(args[4], 64)
 							y, _ := strconv.ParseFloat(args[5], 64)
-							writeVar(varName, junglemath.Point{X: x, Y: y}, varfile)
+							writeVar(varName, junglemath.Point{X: x, Y: y, Z: 0}, varfile)
 							return
 						}
 						if argLen > 6 {
@@ -145,19 +158,56 @@ func main() {
 						}
 					case "line":
 						if argLen > 5 {
-							p1 := getVar(args[4], varfile)
-							p2 := getVar(args[5], varfile)
-							point1 := p1.(junglemath.Point)
-							point2 := p2.(junglemath.Point)
-							writeVar(varName, junglemath.Line{P1: point1, P2: point2}, varfile)
+							p1 := toPoint(getVar(args[4], varfile))
+							p2 := toPoint(getVar(args[5], varfile))
+							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil {
+								writeVar(varName, junglemath.Line{P1: p1, P2: p2}, varfile)
+							} else {
+								fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+							}
 							return
 						}
 					case "triangle":
-						return
+						if argLen > 6 {
+							fmt.Println(getVar(args[5], varfile))
+							a := toPoint(getVar(args[5], varfile))
+							b := toPoint(getVar(args[6], varfile))
+							c := toPoint(getVar(args[7], varfile))
+							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
+								writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
+							} else {
+								fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+							}
+							return
+						}
 					case "angle":
-						return
+						if argLen > 6 {
+							p1 := toPoint(getVar(args[4], varfile))
+							p2 := toPoint(getVar(args[5], varfile))
+							p3 := toPoint(getVar(args[6], varfile))
+							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
+								writeVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
+							} else {
+								fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+							}
+							return
+						}
 					}
 				}
+			}
+		case "-vars":
+			if argLen > 2 {
+				if args[2] == "clear" {
+					homeDir, err := os.UserHomeDir()
+					err = os.WriteFile(homeDir+"/jcalc/vars.json", []byte(""), 0644)
+					if err != nil {
+						fmt.Println(err)
+					}
+					return
+				}
+			} else {
+				fmt.Println(string(varfile))
+				return
 			}
 		}
 	}
