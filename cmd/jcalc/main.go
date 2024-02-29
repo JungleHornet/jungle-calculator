@@ -97,8 +97,12 @@ func writeVar(name string, Var any, varfile []byte) {
 	}
 }
 
-func invCom() {
-	fmt.Println("Error: Invalid command. Run jcalc -help for usage.")
+func invCom(errCode int64) {
+	if errCode == 0 {
+		fmt.Println("Error: Invalid command. Run jcalc -help for usage.")
+	} else if errCode == 1 {
+		fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+	}
 }
 
 func toPoint(m any) junglemath.Point {
@@ -125,6 +129,7 @@ func main() {
 			if argLen > 2 {
 				switch args[2] {
 				case "calc":
+					fmt.Println("Calculator opened. Type q to exit.")
 					junglemath.OpenCalculator()
 					return
 				case "pythag":
@@ -162,7 +167,7 @@ func main() {
 							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil {
 								writeVar(varName, junglemath.Line{P1: p1, P2: p2}, varfile)
 							} else {
-								fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+								invCom(1)
 							}
 							return
 						}
@@ -174,7 +179,7 @@ func main() {
 							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
 							} else {
-								fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+								invCom(1)
 							}
 							return
 						}
@@ -186,7 +191,7 @@ func main() {
 							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
 							} else {
-								fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+								invCom(1)
 							}
 							return
 						}
@@ -207,7 +212,12 @@ func main() {
 				fmt.Println(string(varfile))
 				return
 			}
+		case "-help":
+			fmt.Println("Usage: jcalc [command] [args]")
+			fmt.Println("Commands:")
+			fmt.Println("	jcalc -f \n[pythag] [leg 1 length] [leg 2 length] - Pythagorean Theorem Calculator \n[calc] - Open the Calculator")
+
 		}
 	}
-	invCom()
+	invCom(0)
 }
