@@ -8,7 +8,8 @@ on:
     branches: [ "new-cli" ]
   pull_request:
     branches: [ "new-cli" ]
-
+permissions:
+  contents: write
 jobs:
 
   build:
@@ -26,3 +27,11 @@ jobs:
         go get github.com/junglehornet/goscan@v1.0.1;
         go get github.com/junglehornet/junglemath@v0.5.0-beta;
         make build
+
+    - name: Commit Build Files
+      run: |
+        git config --global user.name 'automated-build'
+        git config --global user.email 'automated-build@users.noreply.github.com'
+        git commit -am "Automated build"
+        git add -A
+        git push
