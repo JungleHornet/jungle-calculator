@@ -1,7 +1,7 @@
 build:
 	cd cmd/jcalc && mkdir -p build
 	cd cmd/jcalc && GOOS=linux GOARCH=amd64 go build -o build/jcalc .
-	cd cmd/jcalc && tar czf build/jcalc build/jungle-calculator-linux64.tar.gz
+	cd cmd/jcalc && tar cz -f build/jungle-calculator-linux64.tar.gz build/jcalc
 	cd cmd/jcalc && GOOS=linux GOARCH=arm64 go build -o build/jcalc .
 	cd cmd/jcalc && tar czf build/jcalc /build/jungle-calculator-linux_arm64.tar.gz
 	cd cmd/jcalc && GOOS=darwin GOARCH=amd64 go build -o build/jcalc .
