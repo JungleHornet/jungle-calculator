@@ -29,6 +29,6 @@ jobs:
         make build;
         git config --global user.name 'automated-build';
         git config --global user.email 'automated-build@users.noreply.github.com';
-        git commit -am "Automated build";
         git add /cmd/jcalc/build/;
+        git commit -am "Automated build";
         git push
