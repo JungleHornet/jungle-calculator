@@ -4,4 +4,7 @@ go 1.21.5
 
 require github.com/junglehornet/junglemath v0.5.0-beta
 
-require github.com/junglehornet/goScan v1.0.0 // indirect
+require (
+	github.com/junglehornet/goScan v1.0.0 // indirect
+	github.com/junglehornet/goscan v1.0.1 // indirect
+)
