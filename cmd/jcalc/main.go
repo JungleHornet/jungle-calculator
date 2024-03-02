@@ -223,6 +223,7 @@ func main() {
 			fmt.Println("                \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
 			fmt.Println("                \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
 			fmt.Println("                \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
+			fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable \033[0m\n        [no function] - View a variable and it's values \n        delete - Delete a variable \n        \033[1;32m \033[0m")
 			fmt.Println("    \033[1;32mjcalc -help - Usage help")
 			return
 		}
