@@ -4,10 +4,7 @@
 name: Go
 
 on:
-  push:
-    branches: [ "new-cli" ]
-  pull_request:
-    branches: [ "new-cli" ]
+  workflow_run
 permissions:
   contents: write
 jobs:
