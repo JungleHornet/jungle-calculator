@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/junglehornet/junglemath"
@@ -84,13 +85,21 @@ func writeVar(name string, Var any, varfile []byte) {
 	varMap := vars[name]
 	err = json.Unmarshal(marshaledVar, &varMap)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 	vars[name] = varMap
 	vars[name]["type"] = reflect.TypeOf(Var).String()
 	marshaled, _ := json.Marshal(vars)
 	homeDir, err := os.UserHomeDir()
-	err = os.WriteFile(homeDir+"/jcalc/vars.json", marshaled, 0644)
+	var indented bytes.Buffer
+	err = json.Indent(&indented, marshaled, "", "\t")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = os.WriteFile(homeDir+"/jcalc/vars.json", indented.Bytes(), 0644)
 	if err != nil {
 		fmt.Println(err)
 
@@ -141,7 +150,7 @@ func main() {
 					}
 				}
 			}
-		case "-new":
+		case "-set":
 			if argLen > 2 {
 				varType := args[2]
 				if argLen > 3 {
@@ -217,9 +226,9 @@ func main() {
 			fmt.Println("Commands:")
 			fmt.Println("WARNING. THIS IS A DEV BUILD. SOME COMMANDS MAY NOT BE IMPLEMENTED.")
 			fmt.Println("    \033[1;32mjcalc -f [function] [args] - Use standalone functions \033[0m\n        pythag [leg 1 length] [leg 2 length] - Pythagorean Theorem Calculator \n        calc - Open general the Calculator")
-			fmt.Println("    \033[1;32mjcalc -new [type] [name] [values] - Create a new variable \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
+			fmt.Println("    \033[1;32mjcalc -set [type] [name] [values] - Create a new variable or set the values of an existing one \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
 			fmt.Println("    \033[1;32mjcalc -vars [command] [args] - View/modify stored variables \033[0m\n        [no command] - View all variables and their values \n        clear - Clear all variables \n        delete [variable] - Delete a variable")
-			fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable \033[0m\n        [no function] - View a variable and it's values \n        set [values] - Set a variable's values \n        delete - Delete a variable \n        \033[1;32mVariable type specific:\033[0m")
+			fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable \033[0m\n        [no function] - View a variable and it's values \n        delete - Delete a variable \n        \033[1;32mVariable type specific:\033[0m")
 			fmt.Println("            \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
 			fmt.Println("            \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
 			fmt.Println("            \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
