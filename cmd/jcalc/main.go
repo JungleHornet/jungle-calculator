@@ -220,9 +220,9 @@ func main() {
 			fmt.Println("    \033[1;32mjcalc -new [type] [name] [values] - Create a new variable \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
 			fmt.Println("    \033[1;32mjcalc -vars [command] [args] - View/modify stored variables \033[0m\n        [no command] - View all variables and their values \n        clear - Clear all variables \n        delete [variable] - Delete a variable")
 			fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable \033[0m\n        [no function] - View a variable and it's values \n        set [values] - Set a variable's values \n        delete - Delete a variable \n        \033[1;32mVariable type specific:\033[0m")
-			fmt.Println("                \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
-			fmt.Println("                \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
-			fmt.Println("                \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
+			fmt.Println("            \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
+			fmt.Println("            \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
+			fmt.Println("            \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
 			fmt.Println("    \033[1;32mjcalc -help - Usage help")
 			return
 		}
