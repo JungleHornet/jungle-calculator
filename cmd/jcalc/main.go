@@ -19,112 +19,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 package main
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/junglehornet/junglemath"
 	"log"
 	"os"
-	"reflect"
 	"sort"
 	"strconv"
 )
-
-func fileExists(filename string) bool {
-	_, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return true
-}
-
-func getVarfile() ([]byte, error) {
-	var homeDir string
-	homeDir, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		if fileExists(homeDir + "/jcalc/vars.json") {
-			return os.ReadFile(homeDir + "/jcalc/vars.json")
-		} else {
-			if fileExists(homeDir + "/jcalc/") {
-				_, err = os.Create(homeDir + "/jcalc/vars.json")
-			} else {
-				err := os.Mkdir(homeDir+"/jcalc/", 0755)
-				if err != nil {
-					return nil, err
-				}
-				_, err = os.Create(homeDir + "/jcalc/vars.json")
-			}
-			if err != nil {
-				return nil, err
-			}
-			return os.ReadFile(homeDir + "/jcalc/vars.json")
-		}
-	}
-	return nil, nil
-}
-
-func getVarOfType(name string, typeString string, varfile []byte) map[string]any {
-	var vars map[string]map[string]any
-	err := json.Unmarshal(varfile, &vars)
-	if err != nil {
-		return nil
-	}
-	varMap := vars[name]
-	storedVarTypeString := varMap["type"]
-	delete(varMap, "type")
-	if _, ok := storedVarTypeString.(string); !ok {
-		log.Fatal("Error: Incorrect variable type: Variable " + name + " is of type " + storedVarTypeString.(string) + ", not of required type " + typeString + ".")
-	}
-	if typeString == storedVarTypeString {
-		return varMap
-	} else {
-		log.Fatal("Error: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use jcalc -set to reset the fields of " + name + " or delete the invalid variable with jcalc -")
-	}
-	return nil
-}
-
-func getVarRaw(name string, varfile []byte) map[string]any {
-	var vars map[string]map[string]any
-	err := json.Unmarshal(varfile, &vars)
-	if err != nil {
-		return nil
-	}
-	return vars[name]
-}
-
-func writeVar(name string, Var any, varfile []byte) {
-	vars := make(map[string]map[string]any)
-	err := json.Unmarshal(varfile, &vars)
-	if err != nil {
-		fmt.Println(err)
-	}
-	vars[name] = make(map[string]any)
-	marshaledVar, _ := json.Marshal(Var)
-	varMap := vars[name]
-	err = json.Unmarshal(marshaledVar, &varMap)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	vars[name] = varMap
-	vars[name]["type"] = reflect.TypeOf(Var).String()
-	marshaled, _ := json.Marshal(vars)
-	homeDir, err := os.UserHomeDir()
-	var indented bytes.Buffer
-	err = json.Indent(&indented, marshaled, "", "    ")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	err = os.WriteFile(homeDir+"/jcalc/vars.json", indented.Bytes(), 0644)
-	if err != nil {
-		fmt.Println(err)
-
-	}
-}
 
 func printHelp() {
 	fmt.Println("Usage: jcalc [command] [args]")
@@ -134,9 +35,9 @@ func printHelp() {
 	fmt.Println("    \033[1;32mjcalc -set [type] [name] [values] - Create a new variable or set the values of an existing one \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
 	fmt.Println("    \033[1;32mjcalc -vars [command] [args] - View/modify stored variables \033[0m\n        [no command] - View all variables and their values \n        clear - Clear all variables \n        delete [variable] - Delete a variable")
 	fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable. [function] values: \033[0m\n        [no function] - View a variable and it's values \n        delete - Delete a variable \n        \033[1;32mVariable type specific:\033[0m")
-	fmt.Println("            \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
-	fmt.Println("            \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
-	fmt.Println("            \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
+	fmt.Println("            \033[1;32mLine:\033[0m \n                len/length - Measure the length of the line")
+	fmt.Println("            \033[1;32mAngle:\033[0m \n                measure - Get the measure of the angle")
+	fmt.Println("            \033[1;32mTriangle:\033[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
 	fmt.Println("    \033[1;32mjcalc -help - Usage help")
 }
 
@@ -146,31 +47,6 @@ func invCom(errCode int64) {
 	} else if errCode == 1 {
 		fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
 	}
-}
-
-func isValidPoint(m map[string]any) bool {
-	if reflect.TypeOf(m["X"]).Kind() != reflect.Int {
-		return false
-	}
-	if reflect.TypeOf(m["Y"]).Kind() != reflect.Int {
-		return false
-	}
-	if reflect.TypeOf(m["Z"]).Kind() != reflect.Int {
-		return false
-	}
-	return true
-}
-
-func toPoint(m map[string]any, name string) junglemath.Point {
-	if isValidPoint(m) {
-		X := m["X"].(float64)
-		Y := m["Y"].(float64)
-		Z := m["Z"].(float64)
-		point := junglemath.Point{X: X, Y: Y, Z: Z}
-		return point
-	}
-	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
-	return junglemath.Point{}
 }
 
 func main() {
@@ -277,8 +153,41 @@ func main() {
 		default:
 			if getVarRaw(args[1], varfile) != nil {
 				varMap := getVarRaw(args[1], varfile)
-				varType := varMap["type"]
+				varType := getVarType(varMap, args[1])
 				if argLen > 2 {
+					switch varType {
+					case "junglemath.Line":
+						lineVar := toLine(getVarOfType(args[1], varType, varfile), args[1])
+						if args[2] == "len" || args[2] == "length" {
+							fmt.Println(lineVar.Length())
+							return
+						}
+					case "junglemath.Angle":
+						angleVar := toAngle(getVarOfType(args[1], varType, varfile), args[1])
+						if args[2] == "measure" {
+							fmt.Println(angleVar.Measure())
+							return
+						}
+					case "junglemath.Triangle":
+						triangleVar := toTriangle(getVarOfType(args[1], varType, varfile), args[1])
+						switch args[2] {
+						case "orthocenter":
+							fmt.Println(triangleVar.Orthocenter())
+							return
+						case "circumcenter":
+							fmt.Println(triangleVar.Circumcenter())
+							return
+						case "centroid":
+							fmt.Println(triangleVar.Centroid())
+							return
+						case "incenter":
+							fmt.Println(triangleVar.Incenter())
+							return
+						case "parts":
+							parts(triangleVar, args[1])
+							return
+						}
+					}
 					log.Fatal("Error: Feature not implemented yet. Make sure you have the latest build, or come back later once we add this feature.")
 					return
 				}
