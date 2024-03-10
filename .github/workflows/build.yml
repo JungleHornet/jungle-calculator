@@ -5,9 +5,9 @@ name: build
 
 on:
   push:
-    branches: [ "new-cli" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "new-cli" ]
+    branches: [ "main" ]
 
 permissions:
   contents: write
