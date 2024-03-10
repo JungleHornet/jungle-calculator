@@ -97,8 +97,8 @@ func main() {
 						}
 					case "line":
 						if argLen > 5 {
-							p1 := toPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
-							p2 := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
+							p1 := junglemath.ToPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
+							p2 := junglemath.ToPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
 							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil {
 								writeVar(varName, junglemath.Line{P1: p1, P2: p2}, varfile)
 								fmt.Println("\033[1;32mSuccessfully set line " + varName + ".\033[0m")
@@ -109,11 +109,11 @@ func main() {
 						}
 					case "triangle":
 						if argLen > 6 {
-							a := toPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
-							b := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
-							c := toPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
+							a := junglemath.ToPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
+							b := junglemath.ToPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
+							c := junglemath.ToPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
 							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil && getVarRaw(args[6], varfile) != nil {
-								if isValidTriangle(junglemath.Triangle{A: a, B: b, C: c}) {
+								if junglemath.IsValidTriangle(junglemath.Triangle{A: a, B: b, C: c}) {
 									writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
 									fmt.Println("\033[1;32mSuccessfully set triangle " + varName + ".\033[0m")
 								} else {
@@ -126,9 +126,9 @@ func main() {
 						}
 					case "angle":
 						if argLen > 6 {
-							p1 := toPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
-							p2 := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
-							p3 := toPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
+							p1 := junglemath.ToPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
+							p2 := junglemath.ToPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
+							p3 := junglemath.ToPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
 							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil && getVarRaw(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
 								fmt.Println("\033[1;32mSuccessfully set angle " + varName + ".\033[0m")
@@ -164,19 +164,19 @@ func main() {
 				if argLen > 2 {
 					switch varType {
 					case "junglemath.Line":
-						lineVar := toLine(getVarOfType(args[1], varType, varfile), args[1])
+						lineVar := junglemath.ToLine(getVarOfType(args[1], varType, varfile), args[1])
 						if args[2] == "len" || args[2] == "length" {
 							fmt.Println("\033[1;32m", lineVar.Length(), "\033[0m")
 							return
 						}
 					case "junglemath.Angle":
-						angleVar := toAngle(getVarOfType(args[1], varType, varfile), args[1])
+						angleVar := junglemath.ToAngle(getVarOfType(args[1], varType, varfile), args[1])
 						if args[2] == "measure" {
 							fmt.Println("\033[1;32m", angleVar.Measure(), "\033[0m")
 							return
 						}
 					case "junglemath.Triangle":
-						triangleVar := toTriangle(getVarOfType(args[1], varType, varfile), args[1])
+						triangleVar := junglemath.ToTriangle(getVarOfType(args[1], varType, varfile), args[1])
 						switch args[2] {
 						case "orthocenter":
 							fmt.Println("\033[1;32m", triangleVar.Orthocenter(), "\033[0m")
