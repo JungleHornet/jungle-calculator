@@ -199,25 +199,25 @@ func toLine(m map[string]any, name string) junglemath.Line {
 }
 
 func isValidAngle(m map[string]any) bool {
-	A, success := m["A"].(map[string]any)
+	pointA, success := m["A"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(A) {
+	if !isValidPoint(pointA) {
 		return false
 	}
-	B, success := m["B"].(map[string]any)
+	pointB, success := m["B"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(B) {
+	if !isValidPoint(pointB) {
 		return false
 	}
-	C, success := m["C"].(map[string]any)
+	pointC, success := m["C"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(C) {
+	if !isValidPoint(pointC) {
 		return false
 	}
 	return true
@@ -225,10 +225,10 @@ func isValidAngle(m map[string]any) bool {
 
 func toAngle(m map[string]any, name string) junglemath.Angle {
 	if isValidAngle(m) {
-		A := toPoint(m["A"].(map[string]any), name)
-		B := toPoint(m["B"].(map[string]any), name)
-		C := toPoint(m["C"].(map[string]any), name)
-		angle := junglemath.Angle{A: A, B: B, C: C}
+		pointA := toPoint(m["A"].(map[string]any), name)
+		pointB := toPoint(m["B"].(map[string]any), name)
+		pointC := toPoint(m["C"].(map[string]any), name)
+		angle := junglemath.Angle{A: pointA, B: pointB, C: pointC}
 		return angle
 	}
 	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
@@ -236,36 +236,36 @@ func toAngle(m map[string]any, name string) junglemath.Angle {
 }
 
 func isValidTriangle(m map[string]any) bool {
-	A, success := m["A"].(map[string]any)
+	pointA, success := m["A"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(A) {
+	if !isValidPoint(pointA) {
 		return false
 	}
-	B, success := m["B"].(map[string]any)
+	pointB, success := m["B"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(B) {
+	if !isValidPoint(pointB) {
 		return false
 	}
-	C, success := m["C"].(map[string]any)
+	pointC, success := m["C"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(C) {
+	if !isValidPoint(pointC) {
 		return false
 	}
 	return true
 }
 
 func toTriangle(m map[string]any, name string) junglemath.Triangle {
-	if isValidAngle(m) {
-		A := toPoint(m["A"].(map[string]any), name)
-		B := toPoint(m["B"].(map[string]any), name)
-		C := toPoint(m["C"].(map[string]any), name)
-		angle := junglemath.Triangle{A: A, B: B, C: C}
+	if isValidTriangle(m) {
+		pointA := toPoint(m["A"].(map[string]any), name)
+		pointB := toPoint(m["B"].(map[string]any), name)
+		pointC := toPoint(m["C"].(map[string]any), name)
+		angle := junglemath.Triangle{A: pointA, B: pointB, C: pointC}
 		return angle
 	}
 	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
