@@ -28,9 +28,9 @@ import (
 )
 
 func printHelp() {
-	fmt.Println("Usage: jcalc [command] [args]")
-	fmt.Println("Commands:")
-	fmt.Println("WARNING. THIS IS A DEV BUILD. SOME COMMANDS MAY NOT BE IMPLEMENTED.")
+	fmt.Println("\033[1;32mUsage: jcalc [command] [args]\033[0m")
+	fmt.Println("\033[1;32mCommands:\033[0m")
+	fmt.Println("\033[1;31mWARNING. THIS IS A DEV BUILD. SOME COMMANDS MAY NOT BE IMPLEMENTED.\033[0m")
 	fmt.Println("    \033[1;32mjcalc -f [function] [args] - Use standalone functions \033[0m\n        pythag [leg 1 length] [leg 2 length] - Pythagorean Theorem Calculator \n        calc - Open general the Calculator")
 	fmt.Println("    \033[1;32mjcalc -set [type] [name] [values] - Create a new variable or set the values of an existing one \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
 	fmt.Println("    \033[1;32mjcalc -vars [command] [args] - View/modify stored variables \033[0m\n        [no command] - View all variables and their values \n        clear - Clear all variables \n        delete [variable] - Delete a variable")
@@ -43,16 +43,14 @@ func printHelp() {
 
 func invCom(errCode int64) {
 	if errCode == 0 {
-		fmt.Println("Error: Invalid command. Run jcalc -help for usage.")
+		fmt.Println("\u001B[1;31mError: Invalid command. Run jcalc -help for usage.\033[0m")
 	} else if errCode == 1 {
-		fmt.Println("Error: Invalid variable. To view all variables, run jcalc -vars")
+		fmt.Println("\033[1;31mError: Invalid variable. To view all variables, run jcalc -vars\033[0m")
 	}
 }
 
 func main() {
 	varfile, err := getVarfile()
-	// Use varFile so compiler shuts up
-	_ = varfile
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -64,14 +62,14 @@ func main() {
 			if argLen > 2 {
 				switch args[2] {
 				case "calc":
-					fmt.Println("Calculator opened. Type q to exit.")
+					fmt.Println("\033[1;32mCalculator opened. Type q to exit\033[0m")
 					junglemath.OpenCalculator()
 					return
 				case "pythag":
 					if argLen > 4 {
 						num1, _ := strconv.ParseFloat(args[3], 64)
 						num2, _ := strconv.ParseFloat(args[4], 64)
-						fmt.Println(junglemath.Pythag(num1, num2))
+						fmt.Println("\033[1;32m", junglemath.Pythag(num1, num2), "\033[0m")
 						return
 					}
 				}
@@ -88,11 +86,13 @@ func main() {
 							y, _ := strconv.ParseFloat(args[5], 64)
 							z, _ := strconv.ParseFloat(args[6], 64)
 							writeVar(varName, junglemath.Point{X: x, Y: y, Z: z}, varfile)
+							fmt.Println("\033[1;32mSuccessfully set point " + varName + ".\033[0m")
 							return
 						} else if argLen > 5 {
 							x, _ := strconv.ParseFloat(args[4], 64)
 							y, _ := strconv.ParseFloat(args[5], 64)
 							writeVar(varName, junglemath.Point{X: x, Y: y, Z: 0}, varfile)
+							fmt.Println("\033[1;32mSuccessfully set point " + varName + ".\033[0m")
 							return
 						}
 					case "line":
@@ -101,6 +101,7 @@ func main() {
 							p2 := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
 							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil {
 								writeVar(varName, junglemath.Line{P1: p1, P2: p2}, varfile)
+								fmt.Println("\033[1;32mSuccessfully set line " + varName + ".\033[0m")
 							} else {
 								invCom(1)
 							}
@@ -112,7 +113,12 @@ func main() {
 							b := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
 							c := toPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
 							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil && getVarRaw(args[6], varfile) != nil {
-								writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
+								if isValidTriangle(junglemath.Triangle{A: a, B: b, C: c}) {
+									writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
+									fmt.Println("\033[1;32mSuccessfully set triangle " + varName + ".\033[0m")
+								} else {
+									fmt.Println("\033[1;31mError: Triangle " + args[4] + ", " + args[5] + ", " + args[6] + " is not a geometrically valid triangle. This may be because the angles do not add up to 180º or because of the triangle inequality theorem.\033[0m")
+								}
 							} else {
 								invCom(1)
 							}
@@ -125,6 +131,7 @@ func main() {
 							p3 := toPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
 							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil && getVarRaw(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
+								fmt.Println("\033[1;32mSuccessfully set angle " + varName + ".\033[0m")
 							} else {
 								invCom(1)
 							}
@@ -159,29 +166,29 @@ func main() {
 					case "junglemath.Line":
 						lineVar := toLine(getVarOfType(args[1], varType, varfile), args[1])
 						if args[2] == "len" || args[2] == "length" {
-							fmt.Println(lineVar.Length())
+							fmt.Println("\033[1;32m", lineVar.Length(), "\033[0m")
 							return
 						}
 					case "junglemath.Angle":
 						angleVar := toAngle(getVarOfType(args[1], varType, varfile), args[1])
 						if args[2] == "measure" {
-							fmt.Println(angleVar.Measure())
+							fmt.Println("\033[1;32m", angleVar.Measure(), "\033[0m")
 							return
 						}
 					case "junglemath.Triangle":
 						triangleVar := toTriangle(getVarOfType(args[1], varType, varfile), args[1])
 						switch args[2] {
 						case "orthocenter":
-							fmt.Println(triangleVar.Orthocenter())
+							fmt.Println("\033[1;32m", triangleVar.Orthocenter(), "\033[0m")
 							return
 						case "circumcenter":
-							fmt.Println(triangleVar.Circumcenter())
+							fmt.Println("\033[1;32m", triangleVar.Circumcenter(), "\033[0m")
 							return
 						case "centroid":
-							fmt.Println(triangleVar.Centroid())
+							fmt.Println("\033[1;32m", triangleVar.Centroid(), "\033[0m")
 							return
 						case "incenter":
-							fmt.Println(triangleVar.Incenter())
+							fmt.Println("\033[1;32m", triangleVar.Incenter(), "\033[0m")
 							return
 						case "parts":
 							parts(triangleVar, args[1])

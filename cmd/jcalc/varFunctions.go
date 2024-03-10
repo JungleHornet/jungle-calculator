@@ -57,12 +57,12 @@ func getVarOfType(name string, typeString string, varfile []byte) map[string]any
 	delete(varMap, "type")
 	_, success := storedVarTypeString.(string)
 	if !success {
-		log.Fatal("Error: Incorrect variable type: Variable " + name + " is of type " + storedVarTypeString.(string) + ", not of required type " + typeString + ".")
+		log.Fatal("\033[1;31mError: Incorrect variable type: Variable " + name + " is of type " + storedVarTypeString.(string) + ", not of required type " + typeString + ".\033[0m")
 	}
 	if typeString == storedVarTypeString {
 		return varMap
 	} else {
-		log.Fatal("Error: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use \"jcalc -set\" to reset the fields of " + name + " or delete the invalid variable with \"jcalc " + name + " delete\"")
+		log.Fatal("\033[1;31mError: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use \"jcalc -set\" to reset the fields of " + name + " or delete the invalid variable with \"jcalc " + name + " delete\"\033[0m")
 	}
 	return nil
 }
@@ -80,7 +80,7 @@ func getVarType(m map[string]any, name string) string {
 	varTypeString := m["type"]
 	_, success := varTypeString.(string)
 	if !success {
-		log.Fatal("Error: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use \"jcalc -set\" to reset the fields of " + name + " or delete the invalid variable with \"jcalc " + name + " delete\"")
+		log.Fatal("\033[1;31mError: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use \"jcalc -set\" to reset the fields of " + name + " or delete the invalid variable with \"jcalc " + name + " delete\"\033[0m")
 	}
 	return varTypeString.(string)
 }
@@ -143,7 +143,7 @@ func parts(t junglemath.Triangle, tName string) {
 	fmt.Print("\n")
 }
 
-func isValidPoint(m map[string]any) bool {
+func isValidPointMap(m map[string]any) bool {
 	delete(m, "type")
 	if reflect.TypeOf(m["X"]).Kind() != reflect.Float64 {
 		return false
@@ -158,116 +158,138 @@ func isValidPoint(m map[string]any) bool {
 }
 
 func toPoint(m map[string]any, name string) junglemath.Point {
-	if isValidPoint(m) {
+	if isValidPointMap(m) {
 		X := m["X"].(float64)
 		Y := m["Y"].(float64)
 		Z := m["Z"].(float64)
 		point := junglemath.Point{X: X, Y: Y, Z: Z}
 		return point
 	}
-	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
+	log.Fatal("\033[1;31mError: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.\033[0m")
 	return junglemath.Point{}
 }
 
-func isValidLine(m map[string]any) bool {
+func isValidLineMap(m map[string]any) bool {
 	P1, success := m["P1"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(P1) {
+	if !isValidPointMap(P1) {
 		return false
 	}
 	P2, success := m["P2"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(P2) {
+	if !isValidPointMap(P2) {
 		return false
 	}
 	return true
 }
 
 func toLine(m map[string]any, name string) junglemath.Line {
-	if isValidLine(m) {
+	if isValidLineMap(m) {
 		P1 := toPoint(m["P1"].(map[string]any), name)
 		P2 := toPoint(m["P2"].(map[string]any), name)
 		line := junglemath.Line{P1: P1, P2: P2}
 		return line
 	}
-	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
+	log.Fatal("\033[1;31mError: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.\033[0m")
 	return junglemath.Line{}
 }
 
-func isValidAngle(m map[string]any) bool {
+func isValidAngleMap(m map[string]any) bool {
 	pointA, success := m["A"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(pointA) {
+	if !isValidPointMap(pointA) {
 		return false
 	}
 	pointB, success := m["B"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(pointB) {
+	if !isValidPointMap(pointB) {
 		return false
 	}
 	pointC, success := m["C"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(pointC) {
+	if !isValidPointMap(pointC) {
 		return false
 	}
 	return true
 }
 
 func toAngle(m map[string]any, name string) junglemath.Angle {
-	if isValidAngle(m) {
+	if isValidAngleMap(m) {
 		pointA := toPoint(m["A"].(map[string]any), name)
 		pointB := toPoint(m["B"].(map[string]any), name)
 		pointC := toPoint(m["C"].(map[string]any), name)
 		angle := junglemath.Angle{A: pointA, B: pointB, C: pointC}
 		return angle
 	}
-	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
+	log.Fatal("\033[1;31mError: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.\033[0m")
 	return junglemath.Angle{}
 }
 
-func isValidTriangle(m map[string]any) bool {
+func isValidTriangleMap(m map[string]any) bool {
 	pointA, success := m["A"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(pointA) {
+	if !isValidPointMap(pointA) {
 		return false
 	}
 	pointB, success := m["B"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(pointB) {
+	if !isValidPointMap(pointB) {
 		return false
 	}
 	pointC, success := m["C"].(map[string]any)
 	if !success {
 		return false
 	}
-	if !isValidPoint(pointC) {
+	if !isValidPointMap(pointC) {
 		return false
 	}
 	return true
 }
 
 func toTriangle(m map[string]any, name string) junglemath.Triangle {
-	if isValidTriangle(m) {
+	if isValidTriangleMap(m) {
 		pointA := toPoint(m["A"].(map[string]any), name)
 		pointB := toPoint(m["B"].(map[string]any), name)
 		pointC := toPoint(m["C"].(map[string]any), name)
 		angle := junglemath.Triangle{A: pointA, B: pointB, C: pointC}
 		return angle
 	}
-	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
+	log.Fatal("\033[1;31mError: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.\033[0m")
 	return junglemath.Triangle{}
+}
+
+func isValidTriangle(t junglemath.Triangle) bool {
+	angleA := junglemath.Angle{A: t.B, B: t.A, C: t.C}
+	angleB := junglemath.Angle{A: t.A, B: t.B, C: t.C}
+	angleC := junglemath.Angle{A: t.A, B: t.C, C: t.B}
+	if angleA.Measure()+angleB.Measure()+angleC.Measure() != 180 {
+		return false
+	}
+	aSide := junglemath.Line{P1: t.B, P2: t.C}
+	bSide := junglemath.Line{P1: t.A, P2: t.C}
+	cSide := junglemath.Line{P1: t.A, P2: t.B}
+	if aSide.Length()+bSide.Length() <= cSide.Length() {
+		return false
+	}
+	if aSide.Length()+cSide.Length() <= bSide.Length() {
+		return false
+	}
+	if bSide.Length()+cSide.Length() <= aSide.Length() {
+		return false
+	}
+	return true
 }
