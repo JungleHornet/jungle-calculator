@@ -23,8 +23,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/junglehornet/junglemath"
+	"log"
 	"os"
 	"reflect"
+	"sort"
 	"strconv"
 )
 
@@ -36,7 +38,7 @@ func fileExists(filename string) bool {
 	return true
 }
 
-func getJson() ([]byte, error) {
+func getVarfile() ([]byte, error) {
 	var homeDir string
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
@@ -63,15 +65,33 @@ func getJson() ([]byte, error) {
 	return nil, nil
 }
 
-func getVar(name string, varfile []byte) any {
+func getVarOfType(name string, typeString string, varfile []byte) map[string]any {
 	var vars map[string]map[string]any
 	err := json.Unmarshal(varfile, &vars)
 	if err != nil {
 		return nil
 	}
-	Var := vars[name]
-	delete(Var, "type")
-	return Var
+	varMap := vars[name]
+	storedVarTypeString := varMap["type"]
+	delete(varMap, "type")
+	if _, ok := storedVarTypeString.(string); !ok {
+		log.Fatal("Error: Incorrect variable type: Variable " + name + " is of type " + storedVarTypeString.(string) + ", not of required type " + typeString + ".")
+	}
+	if typeString == storedVarTypeString {
+		return varMap
+	} else {
+		log.Fatal("Error: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use jcalc -set to reset the fields of " + name + " or delete the invalid variable with jcalc -")
+	}
+	return nil
+}
+
+func getVarRaw(name string, varfile []byte) map[string]any {
+	var vars map[string]map[string]any
+	err := json.Unmarshal(varfile, &vars)
+	if err != nil {
+		return nil
+	}
+	return vars[name]
 }
 
 func writeVar(name string, Var any, varfile []byte) {
@@ -93,7 +113,7 @@ func writeVar(name string, Var any, varfile []byte) {
 	marshaled, _ := json.Marshal(vars)
 	homeDir, err := os.UserHomeDir()
 	var indented bytes.Buffer
-	err = json.Indent(&indented, marshaled, "", "\t")
+	err = json.Indent(&indented, marshaled, "", "    ")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -106,6 +126,20 @@ func writeVar(name string, Var any, varfile []byte) {
 	}
 }
 
+func printHelp() {
+	fmt.Println("Usage: jcalc [command] [args]")
+	fmt.Println("Commands:")
+	fmt.Println("WARNING. THIS IS A DEV BUILD. SOME COMMANDS MAY NOT BE IMPLEMENTED.")
+	fmt.Println("    \033[1;32mjcalc -f [function] [args] - Use standalone functions \033[0m\n        pythag [leg 1 length] [leg 2 length] - Pythagorean Theorem Calculator \n        calc - Open general the Calculator")
+	fmt.Println("    \033[1;32mjcalc -set [type] [name] [values] - Create a new variable or set the values of an existing one \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
+	fmt.Println("    \033[1;32mjcalc -vars [command] [args] - View/modify stored variables \033[0m\n        [no command] - View all variables and their values \n        clear - Clear all variables \n        delete [variable] - Delete a variable")
+	fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable. [function] values: \033[0m\n        [no function] - View a variable and it's values \n        delete - Delete a variable \n        \033[1;32mVariable type specific:\033[0m")
+	fmt.Println("            \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
+	fmt.Println("            \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
+	fmt.Println("            \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
+	fmt.Println("    \033[1;32mjcalc -help - Usage help")
+}
+
 func invCom(errCode int64) {
 	if errCode == 0 {
 		fmt.Println("Error: Invalid command. Run jcalc -help for usage.")
@@ -114,17 +148,33 @@ func invCom(errCode int64) {
 	}
 }
 
-func toPoint(m any) junglemath.Point {
-	pointMap := m.(map[string]any)
-	X := pointMap["X"].(float64)
-	Y := pointMap["Y"].(float64)
-	Z := pointMap["Z"].(float64)
-	point := junglemath.Point{X: X, Y: Y, Z: Z}
-	return point
+func isValidPoint(m map[string]any) bool {
+	if reflect.TypeOf(m["X"]).Kind() != reflect.Int {
+		return false
+	}
+	if reflect.TypeOf(m["Y"]).Kind() != reflect.Int {
+		return false
+	}
+	if reflect.TypeOf(m["Z"]).Kind() != reflect.Int {
+		return false
+	}
+	return true
+}
+
+func toPoint(m map[string]any, name string) junglemath.Point {
+	if isValidPoint(m) {
+		X := m["X"].(float64)
+		Y := m["Y"].(float64)
+		Z := m["Z"].(float64)
+		point := junglemath.Point{X: X, Y: Y, Z: Z}
+		return point
+	}
+	log.Fatal("Error: Invalid stored variable: " + name + ". Please use jcalc -set to reset the variable's values.")
+	return junglemath.Point{}
 }
 
 func main() {
-	varfile, err := getJson()
+	varfile, err := getVarfile()
 	// Use varFile so compiler shuts up
 	_ = varfile
 	if err != nil {
@@ -171,9 +221,9 @@ func main() {
 						}
 					case "line":
 						if argLen > 5 {
-							p1 := toPoint(getVar(args[4], varfile))
-							p2 := toPoint(getVar(args[5], varfile))
-							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil {
+							p1 := toPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
+							p2 := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
+							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil {
 								writeVar(varName, junglemath.Line{P1: p1, P2: p2}, varfile)
 							} else {
 								invCom(1)
@@ -182,10 +232,10 @@ func main() {
 						}
 					case "triangle":
 						if argLen > 6 {
-							a := toPoint(getVar(args[4], varfile))
-							b := toPoint(getVar(args[5], varfile))
-							c := toPoint(getVar(args[6], varfile))
-							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
+							a := toPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
+							b := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
+							c := toPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
+							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil && getVarRaw(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Triangle{A: a, B: b, C: c}, varfile)
 							} else {
 								invCom(1)
@@ -194,10 +244,10 @@ func main() {
 						}
 					case "angle":
 						if argLen > 6 {
-							p1 := toPoint(getVar(args[4], varfile))
-							p2 := toPoint(getVar(args[5], varfile))
-							p3 := toPoint(getVar(args[6], varfile))
-							if getVar(args[4], varfile) != nil && getVar(args[5], varfile) != nil && getVar(args[6], varfile) != nil {
+							p1 := toPoint(getVarOfType(args[4], "junglemath.Point", varfile), args[4])
+							p2 := toPoint(getVarOfType(args[5], "junglemath.Point", varfile), args[5])
+							p3 := toPoint(getVarOfType(args[6], "junglemath.Point", varfile), args[6])
+							if getVarRaw(args[4], varfile) != nil && getVarRaw(args[5], varfile) != nil && getVarRaw(args[6], varfile) != nil {
 								writeVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
 							} else {
 								invCom(1)
@@ -222,18 +272,29 @@ func main() {
 				return
 			}
 		case "-help":
-			fmt.Println("Usage: jcalc [command] [args]")
-			fmt.Println("Commands:")
-			fmt.Println("WARNING. THIS IS A DEV BUILD. SOME COMMANDS MAY NOT BE IMPLEMENTED.")
-			fmt.Println("    \033[1;32mjcalc -f [function] [args] - Use standalone functions \033[0m\n        pythag [leg 1 length] [leg 2 length] - Pythagorean Theorem Calculator \n        calc - Open general the Calculator")
-			fmt.Println("    \033[1;32mjcalc -set [type] [name] [values] - Create a new variable or set the values of an existing one \033[0m\n        point [x] [y] [z (optional, default 0)] - Create a new point \n        line [point1] [point2] - Create a new line \n        triangle [point1] [point2] [point3] - Create a new triangle \n        angle [point1] [point2] [point3] - Create a new angle")
-			fmt.Println("    \033[1;32mjcalc -vars [command] [args] - View/modify stored variables \033[0m\n        [no command] - View all variables and their values \n        clear - Clear all variables \n        delete [variable] - Delete a variable")
-			fmt.Println("    \033[1;32mjcalc [variable] [function] - Do operations on a variable \033[0m\n        [no function] - View a variable and it's values \n        delete - Delete a variable \n        \033[1;32mVariable type specific:\033[0m")
-			fmt.Println("            \u001B[1;32mLine:\u001B[0m \n                len/length - Measure the length of the line")
-			fmt.Println("            \u001B[1;32mAngle:\u001B[0m \n                measure - Get the measure of the angle")
-			fmt.Println("            \u001B[1;32mTriangle:\u001B[0m \n                orthocenter - Get the orthocenter of the triangle \n                circumcenter - Get the circumcenter of the triangle \n                centroid - Get the centroid of the triangle \n                incenter - Get the incenter of the triangle \n                orthocenter - Get the orthocenter of the triangle \n                parts - Get the info on each angle and side of the triangle.")
-			fmt.Println("    \033[1;32mjcalc -help - Usage help")
+			printHelp()
 			return
+		default:
+			if getVarRaw(args[1], varfile) != nil {
+				varMap := getVarRaw(args[1], varfile)
+				varType := varMap["type"]
+				if argLen > 2 {
+					log.Fatal("Error: Feature not implemented yet. Make sure you have the latest build, or come back later once we add this feature.")
+					return
+				}
+				fmt.Println("Variable " + args[1] + ":")
+				fmt.Println("Type:", varType)
+				delete(varMap, "type")
+				var names []string
+				for name := range varMap {
+					names = append(names, name)
+				}
+				sort.Slice(names, func(i, j int) bool { return names[i] < names[j] })
+				for _, name := range names {
+					fmt.Println(name+":", varMap[name])
+				}
+				return
+			}
 		}
 	}
 	invCom(0)
