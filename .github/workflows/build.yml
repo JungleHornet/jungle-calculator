@@ -1,13 +1,16 @@
 # This workflow will build a golang project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: PackageBuild
+name: build
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ "new-cli" ]
+  pull_request:
+    branches: [ "new-cli" ]
 
 permissions:
   contents: write
-  
 jobs:
 
   build:
@@ -23,10 +26,5 @@ jobs:
     - name: Build
       run:
         go get github.com/junglehornet/goscan@v1.0.1;
-        go get github.com/junglehornet/junglemath@v0.5.2-beta;
-        make build;
-        git config --global user.name 'github-actions';
-        git config --global user.email 'github-actions@users.noreply.github.com';
-        git add cmd/jcalc/build/;
-        git commit -am "Github Actions Build";
-        git push;
+        go get github.com/junglehornet/junglemath@v0.5.1-beta;
+        make testbuild;
