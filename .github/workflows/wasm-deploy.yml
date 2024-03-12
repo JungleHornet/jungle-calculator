@@ -30,6 +30,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Build WASM
         run:
+          go get github.com/junglehornet/goscan@v1.0.1;
+          go get github.com/junglehornet/junglemath@v0.5.2-beta;
           GOOS=js GOARCH=wasm go build -o web/jcalc.wasm ./cmd/jcalc
       - name: Setup Pages
         uses: actions/configure-pages@v4
