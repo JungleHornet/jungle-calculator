@@ -19,15 +19,7 @@
 	<div><span>$ jcalc&nbsp;</span><input id="input" disabled placeholder="Loading WebAssembly binary..."></div>
 	<p>jcalc Web Version; <a href="https://gh.junglehornet.com/jungle-calculator">homepage</a>. Type <code>-help</code> for usage; the <a href="https://gh.junglehornet.com/jungle-calculator/blob/main/README.md">README</a> has more information.</a></p>
 
-	<p>
-		<button class="light">Light</button>
-		<button class="dark">Dark</button>
-		<button class="sepia">Sepia</button>
-		· <button class="permalink">Permalink to last command</button>
-		· Up/down arrows to cycle history, ^L to clear the screen.</p>
-
 	<script src="wasm_exec.js"></script>
-	<script src="term.js"></script>
 	<script>
 		(function() {
 			if (!('WebAssembly' in window)) {
