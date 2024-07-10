@@ -25,6 +25,6 @@ jobs:
 
     - name: Build
       run:
-        go get github.com/junglehornet/goscan@v1.0.1;
+        go get github.com/junglehornet/goscan@v1.0.2;
         go get github.com/junglehornet/junglemath@v0.5.2-beta;
         make testbuild;
