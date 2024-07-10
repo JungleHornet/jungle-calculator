@@ -40,14 +40,22 @@ Ex. jcalc set angle a1 p1 p2 p3`,
 		}
 		if len(args) > 3 {
 			varName := args[0]
-			p1 := junglemath.ToPoint(util.GetVarOfType(args[1], "junglemath.Point", varfile), args[1])
-			p2 := junglemath.ToPoint(util.GetVarOfType(args[2], "junglemath.Point", varfile), args[2])
-			p3 := junglemath.ToPoint(util.GetVarOfType(args[3], "junglemath.Point", varfile), args[3])
-			if util.GetVarRaw(args[1], varfile) != nil && util.GetVarRaw(args[2], varfile) != nil && util.GetVarRaw(args[3], varfile) != nil {
-				util.WriteVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
-				fmt.Println("\033[1;32mSuccessfully set angle " + varName + ".\033[0m")
+			if util.GetVarRaw(args[1], varfile) != nil {
+				if util.GetVarRaw(args[2], varfile) != nil {
+					if util.GetVarRaw(args[3], varfile) != nil {
+						p1 := junglemath.ToPoint(util.GetVarOfType(args[1], "junglemath.Point", varfile), args[1])
+						p2 := junglemath.ToPoint(util.GetVarOfType(args[2], "junglemath.Point", varfile), args[2])
+						p3 := junglemath.ToPoint(util.GetVarOfType(args[3], "junglemath.Point", varfile), args[3])
+						util.WriteVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
+						fmt.Println("\033[1;32mSuccessfully set angle " + varName + ".\033[0m")
+					} else {
+						fmt.Println("\033[1;31mWarning: Variable " + args[3] + " does not exist.\033[0m")
+					}
+				} else {
+					fmt.Println("\033[1;31mWarning: Variable " + args[2] + " does not exist.\033[0m")
+				}
 			} else {
-				fmt.Println("\033[1;31mError: Invalid variable. To view all variables, run \"jcalc vars\"\033[0m")
+				fmt.Println("\033[1;31mWarning: Variable " + args[1] + " does not exist.\033[0m")
 			}
 			return
 		}

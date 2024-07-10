@@ -20,7 +20,7 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/junglehornet/jungle-calculator/util"
 	"github.com/spf13/cobra"
 )
 
@@ -30,7 +30,13 @@ var deleteCmd = &cobra.Command{
 	Short: "Deletes a variable",
 	Long:  `Deletes a variable and it's value(s) permanently. Use with caution.'`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("delete called")
+		varfile, err := util.GetVarfile()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		util.RmVar(args[0], varfile)
+		fmt.Println("\033[1;32mSuccessfully deleted " + args[0] + ".\033[0m")
 	},
 }
 

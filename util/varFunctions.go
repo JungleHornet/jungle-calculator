@@ -70,6 +70,9 @@ func GetVarOfType(name string, typeString string, varfile []byte) map[string]any
 		return nil
 	}
 	varMap := vars[name]
+	if varMap == nil {
+		return nil
+	}
 	storedVarTypeString := varMap["type"]
 	delete(varMap, "type")
 	_, success := storedVarTypeString.(string)
@@ -118,6 +121,29 @@ func WriteVar(name string, Var any, varfile []byte) {
 	}
 	vars[name] = varMap
 	vars[name]["type"] = reflect.TypeOf(Var).String()
+	marshaled, _ := json.Marshal(vars)
+	homeDir, err := os.UserHomeDir()
+	var indented bytes.Buffer
+	err = json.Indent(&indented, marshaled, "", "    ")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = os.WriteFile(homeDir+"/jcalc/vars.json", indented.Bytes(), 0644)
+	if err != nil {
+		fmt.Println(err)
+
+	}
+}
+
+func RmVar(name string, varfile []byte) {
+	vars := make(map[string]map[string]any)
+	err := json.Unmarshal(varfile, &vars)
+	if err != nil {
+		fmt.Println(err)
+	}
+	delete(vars, name)
 	marshaled, _ := json.Marshal(vars)
 	homeDir, err := os.UserHomeDir()
 	var indented bytes.Buffer
