@@ -20,6 +20,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/junglehornet/jungle-calculator/util"
+	"github.com/junglehornet/junglemath"
 
 	"github.com/spf13/cobra"
 )
@@ -31,7 +33,24 @@ var angleCmd = &cobra.Command{
 	Long: `Sets an angle variable.
 Ex. jcalc set angle a1 p1 p2 p3`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("angle called")
+		varfile, err := util.GetVarfile()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		if len(args) > 3 {
+			varName := args[0]
+			p1 := junglemath.ToPoint(util.GetVarOfType(args[1], "junglemath.Point", varfile), args[1])
+			p2 := junglemath.ToPoint(util.GetVarOfType(args[2], "junglemath.Point", varfile), args[2])
+			p3 := junglemath.ToPoint(util.GetVarOfType(args[3], "junglemath.Point", varfile), args[3])
+			if util.GetVarRaw(args[1], varfile) != nil && util.GetVarRaw(args[2], varfile) != nil && util.GetVarRaw(args[3], varfile) != nil {
+				util.WriteVar(varName, junglemath.Angle{A: p1, B: p2, C: p3}, varfile)
+				fmt.Println("\033[1;32mSuccessfully set angle " + varName + ".\033[0m")
+			} else {
+				fmt.Println("\033[1;31mError: Invalid variable. To view all variables, run \"jcalc vars\"\033[0m")
+			}
+			return
+		}
 	},
 }
 

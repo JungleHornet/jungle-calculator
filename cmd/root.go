@@ -23,7 +23,6 @@ import (
 	"github.com/junglehornet/jungle-calculator/util"
 	"github.com/junglehornet/junglemath"
 	"github.com/spf13/cobra"
-	"log"
 	"os"
 	"sort"
 )
@@ -58,6 +57,7 @@ delete - Delete a variable
 		varfile, err := util.GetVarfile()
 		if err != nil {
 			fmt.Println(err)
+			return
 		}
 		argLen := len(args)
 		if util.GetVarRaw(args[0], varfile) != nil {
@@ -97,7 +97,7 @@ delete - Delete a variable
 						return
 					}
 				}
-				log.Fatal("Error: Feature not implemented yet. Make sure you have the latest build, or come back later once we add this feature.")
+				fmt.Println("Error: Invalid variable type")
 				return
 			}
 			fmt.Println("Variable " + args[0] + ":")
