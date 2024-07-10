@@ -42,7 +42,7 @@ To # Root: #r<number>
 	Ex. 2r4 = 2
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Opened calculator. Enter equation and enter to solve, or q to quit")
+		fmt.Println("Opened calculator. Enter equation and enter to solve, or q to quit. For more info on how to use the calculator, run \"jcalc help calc\"")
 		junglemath.OpenCalculator()
 	},
 }

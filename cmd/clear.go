@@ -20,6 +20,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -30,7 +31,13 @@ var clearCmd = &cobra.Command{
 	Short: "Clears all variables",
 	Long:  `Clears the vars file, thus deleting all variables and their values permanently. Use with caution.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("clear called")
+		homeDir, err := os.UserHomeDir()
+		err = os.WriteFile(homeDir+"/jcalc/vars.json", []byte(""), 0644)
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println("\033[1;32mVars file cleared\033[0m")
+		}
 	},
 }
 

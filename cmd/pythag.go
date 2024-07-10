@@ -20,6 +20,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/junglehornet/junglemath"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -30,7 +32,14 @@ var pythagCmd = &cobra.Command{
 	Short: "Pythagorean theorem",
 	Long:  `Uses the pythagorean theorem to find the hypotenuse of a right triangle using the length of the legs of the triangle.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("pythag called")
+		if len(args) > 1 {
+			num1, _ := strconv.ParseFloat(args[0], 64)
+			num2, _ := strconv.ParseFloat(args[1], 64)
+			fmt.Println("\033[1;32m", junglemath.Pythag(num1, num2), "\033[0m")
+			return
+		} else {
+			fmt.Println("\033[1;31mError: Insufficient arguments. Use \"$ jcalc help pythag\" for usage.\033[0m")
+		}
 	},
 }
 
