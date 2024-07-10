@@ -20,32 +20,30 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-// startCmd represents the start command
-var startCmd = &cobra.Command{
-	Use:   "start",
-	Short: "Opens the interactive CLI.",
-	Long:  `Opens the interactive CLI.`,
+// pythagCmd represents the pythag command
+var pythagCmd = &cobra.Command{
+	Use:   "pythag [leg 1 length] [leg 2 length]",
+	Short: "Pythagorean theorem",
+	Long:  `Uses the pythagorean theorem to find the hypotenuse of a right triangle using the length of the legs of the triangle.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-\033[1;32mWelcome to JungleCalculator!\033[0m\n
-Unfortunately, the interactive CLI is not completed yet.
-`)
+		fmt.Println("pythag called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	rootCmd.AddCommand(pythagCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// startCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// pythagCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// startCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// pythagCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

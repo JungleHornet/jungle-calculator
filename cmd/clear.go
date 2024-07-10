@@ -20,32 +20,30 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-// startCmd represents the start command
-var startCmd = &cobra.Command{
-	Use:   "start",
-	Short: "Opens the interactive CLI.",
-	Long:  `Opens the interactive CLI.`,
+// clearCmd represents the clear command
+var clearCmd = &cobra.Command{
+	Use:   "clear",
+	Short: "Clears all variables",
+	Long:  `Clears the vars file, thus deleting all variables and their values permanently. Use with caution.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-\033[1;32mWelcome to JungleCalculator!\033[0m\n
-Unfortunately, the interactive CLI is not completed yet.
-`)
+		fmt.Println("clear called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	varsCmd.AddCommand(clearCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// startCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// clearCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// startCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// clearCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

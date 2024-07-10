@@ -20,32 +20,43 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/junglehornet/junglemath"
+
 	"github.com/spf13/cobra"
 )
 
-// startCmd represents the start command
-var startCmd = &cobra.Command{
-	Use:   "start",
-	Short: "Opens the interactive CLI.",
-	Long:  `Opens the interactive CLI.`,
+// calcCmd represents the calc command
+var calcCmd = &cobra.Command{
+	Use:   "calc",
+	Short: "Opens the calculator",
+	Long: `Opens the general calculator where you can solve equations with order of operations.
+To Add: +
+	Ex. 2+4 = 6
+To Subtract: -
+	Ex. 2-4 = -2
+To Multiply: *
+	Ex. 2*4 = 8
+To Divide: /
+	Ex. 2/4 = 0.5
+To # Root: #r<number>
+	Ex. 2r4 = 2
+`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-\033[1;32mWelcome to JungleCalculator!\033[0m\n
-Unfortunately, the interactive CLI is not completed yet.
-`)
+		fmt.Println("Opened calculator. Enter equation and enter to solve, or q to quit")
+		junglemath.OpenCalculator()
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	rootCmd.AddCommand(calcCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// startCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// calcCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// startCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// calcCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

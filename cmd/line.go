@@ -20,32 +20,31 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-// startCmd represents the start command
-var startCmd = &cobra.Command{
-	Use:   "start",
-	Short: "Opens the interactive CLI.",
-	Long:  `Opens the interactive CLI.`,
+// lineCmd represents the line command
+var lineCmd = &cobra.Command{
+	Use:   "line [name] [point1] [point2]",
+	Short: "Sets a line variable",
+	Long: `Sets a line variable.
+Ex. jcalc set line l1 p1 p2`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-\033[1;32mWelcome to JungleCalculator!\033[0m\n
-Unfortunately, the interactive CLI is not completed yet.
-`)
+		fmt.Println("line called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	setCmd.AddCommand(lineCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// startCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// lineCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// startCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// lineCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

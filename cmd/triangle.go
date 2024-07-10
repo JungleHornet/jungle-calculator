@@ -20,32 +20,31 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
-// startCmd represents the start command
-var startCmd = &cobra.Command{
-	Use:   "start",
-	Short: "Opens the interactive CLI.",
-	Long:  `Opens the interactive CLI.`,
+// triangleCmd represents the triangle command
+var triangleCmd = &cobra.Command{
+	Use:   "triangle [name] [point1] [point2] [point3]",
+	Short: "Sets a triangle variable",
+	Long: `Sets a triangle variable.
+Ex. jcalc set triangle t1 p1 p2 p3`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print(`
-\033[1;32mWelcome to JungleCalculator!\033[0m\n
-Unfortunately, the interactive CLI is not completed yet.
-`)
+		fmt.Println("triangle called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(startCmd)
+	setCmd.AddCommand(triangleCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// startCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// triangleCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// startCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// triangleCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
