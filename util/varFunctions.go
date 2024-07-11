@@ -77,14 +77,15 @@ func GetVarOfType(name string, typeString string, varfile []byte) map[string]any
 	delete(varMap, "type")
 	_, success := storedVarTypeString.(string)
 	if !success {
-		log.Fatal("\033[1;31mError: Incorrect variable type: Variable " + name + " is of type " + storedVarTypeString.(string) + ", not of required type " + typeString + ".\033[0m")
+		fmt.Println("\033[1;31mError: Invalid vars.json. Stored type of variable \"" + name + "\" is not a string. Please use \"jcalc set\" to reset the variable \"" + name + "\" or delete the invalid variable with \"jcalc " + name + " delete\"\033[0m")
+		return nil
 	}
 	if typeString == storedVarTypeString {
 		return varMap
 	} else {
-		log.Fatal("\033[1;31mError: Invalid vars.json. Stored type of variable " + name + " is not a string. Please use \"jcalc -set\" to reset the fields of " + name + " or delete the invalid variable with \"jcalc " + name + " delete\"\033[0m")
+		fmt.Println("\033[1;31mError: Incorrect variable type: Variable \"" + name + "\" is of type \"" + storedVarTypeString.(string) + "\", not of required type \"" + typeString + "\".\033[0m")
+		return nil
 	}
-	return nil
 }
 
 func GetVarRaw(name string, varfile []byte) map[string]any {

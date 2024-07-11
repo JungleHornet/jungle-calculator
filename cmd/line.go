@@ -20,6 +20,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/junglehornet/jungle-calculator/util"
+	"github.com/junglehornet/junglemath"
 
 	"github.com/spf13/cobra"
 )
@@ -31,7 +33,29 @@ var lineCmd = &cobra.Command{
 	Long: `Sets a line variable.
 Ex. jcalc set line l1 p1 p2`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("line called")
+		varfile, err := util.GetVarfile()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		if len(args) > 2 {
+			varName := args[0]
+			if util.GetVarRaw(args[1], varfile) != nil && util.GetVarRaw(args[1], varfile)["type"] == "junglemath.Point" {
+				if util.GetVarRaw(args[2], varfile) != nil && util.GetVarRaw(args[1], varfile)["type"] == "junglemath.Point" {
+					p1 := junglemath.ToPoint(util.GetVarOfType(args[1], "junglemath.Point", varfile), args[1])
+					p2 := junglemath.ToPoint(util.GetVarOfType(args[2], "junglemath.Point", varfile), args[2])
+					util.WriteVar(varName, junglemath.Line{P1: p1, P2: p2}, varfile)
+					fmt.Println("\033[1;32mSuccessfully set line " + varName + ".\033[0m")
+				} else {
+					fmt.Println("\033[1;31mError: Variable " + args[2] + " does not exist or is of wrong type.\033[0m")
+				}
+			} else {
+				fmt.Println("\033[1;31mError: Variable " + args[1] + " does not exist or is of wrong type.\033[0m")
+			}
+			return
+		} else {
+			fmt.Println("\033[1;31mError: Not enough arguments provided. Run \"jcalc help set line\" for usage.\033[0m")
+		}
 	},
 }
 

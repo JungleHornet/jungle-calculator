@@ -20,6 +20,9 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/junglehornet/jungle-calculator/util"
+	"github.com/junglehornet/junglemath"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -32,7 +35,28 @@ var pointCmd = &cobra.Command{
 Note: x, y, and z values are optional and will default to 0 if not specified.
 Ex. jcalc set point p1 1 54`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("point called")
+		varfile, err := util.GetVarfile()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		if len(args) > 3 {
+			x, _ := strconv.ParseFloat(args[1], 64)
+			y, _ := strconv.ParseFloat(args[2], 64)
+			z, _ := strconv.ParseFloat(args[3], 64)
+			util.WriteVar(args[0], junglemath.Point{X: x, Y: y, Z: z}, varfile)
+			fmt.Println("\033[1;32mSuccessfully set point " + args[0] + ".\033[0m")
+			return
+		} else if len(args) > 2 {
+			x, _ := strconv.ParseFloat(args[1], 64)
+			y, _ := strconv.ParseFloat(args[2], 64)
+			util.WriteVar(args[0], junglemath.Point{X: x, Y: y, Z: 0}, varfile)
+			fmt.Println("\033[1;32mSuccessfully set point " + args[0] + ".\033[0m")
+			return
+		} else {
+			fmt.Println("\033[1;31mError: Not enough arguments provided. Run \"jcalc help set point\" for usage.\033[0m")
+		}
+		return
 	},
 }
 

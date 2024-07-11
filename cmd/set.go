@@ -31,7 +31,8 @@ var setCmd = &cobra.Command{
 	Long: `Used to set variables. It can be used to create new variables, or reset the values of existing ones.
 See subcommands for examples of usage.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("set called")
+		fmt.Println("Please provide a variable type to set.")
+		return
 	},
 }
 

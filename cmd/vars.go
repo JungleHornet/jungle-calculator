@@ -20,22 +20,22 @@ package cmd
 
 import (
 	"fmt"
-
+	"github.com/junglehornet/jungle-calculator/util"
 	"github.com/spf13/cobra"
 )
 
 // varsCmd represents the vars command
 var varsCmd = &cobra.Command{
-	Use:   "vars",
-	Short: "Used for various operations involving variables",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "vars [command]",
+	Short: "Used to manage stored variables",
+	Long:  `Prints out all variables in json format, or "jcalc vars clear" deletes all variables.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("vars called")
+		varfile, err := util.GetVarfile()
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(string(varfile))
+		return
 	},
 }
 
