@@ -12,3 +12,5 @@ require (
 	github.com/junglehornet/goscan v1.0.2 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 )
+
+replace github.com/spf13/cobra => ../cobra
